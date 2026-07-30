@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+     <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!DOCTYPE html>
@@ -12,49 +14,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marikato</title>
+
+    
+
 </head>
 <body>
 
    
-    <header>
+<header>
 
+    <div class="logo">
+        <img src="https://ik.imagekit.io/sl226drpx/Gemini_Generated_Image_sxs1osxs1osxs1os-removebg-preview.png"
+             alt="Logo"
+             width="190"
+             height="50">
+    </div>
+
+    <div>
+<!-- <div>
+    <select name="delivery" id="delivery">
+        <option value="ethiopia">Delivery</option>
+        <option value="kenya">Pickup</option>
+        <option value="tanzania">Shipping</option>
+    </select>
+</div> -->
+        
+    </div>
+
+    <div id="search">
+        <form>
+            <input type="search" placeholder="Search products...">
+            <button type="submit" style="color: blue;"><i class="fa fa-search" style="color: blue;"></i></button>
+        </form>
+    </div>
+
+   <div>
+    <button class="account-btn"><i class="fa fa-user"></i>Account</button>
+   </div>
+
+   
       
-        <div>
-            <!-- <h1>Asmazion</h1> -->
-            <img src="Logo.png" alt="logo  width="50" height="50" ">
-        </div>
+<div id="cart"><i class="fa badge fa-lg" value="8">&#xf07a;</i></div>
  
-        <div>
-            <form>
-                <input type="search" placeholder="Search products...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
 
-      
-        <div>
-            <a href="#">Login</a> |
-            <a href="#">Register</a> |
-            <!-- <a href="#">Wishlist</a> | -->
-             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTekNA7dtgY_zVyT-VbZfJq_3Plc-UkAf2_dGMussS2qA&s=10" alt="" width="25" height="25">
-            <a href="#">Cart (0)</a>
-            <div>
-                <select name="language" id="language">
-                    <option value="Amh">Amh</option>
-                    <option value="Eng">Eng</option>
-                    <option value="Affan oromo">Affani oromo</option>
-                </select>
-            </div>
-        </div>
+<div >
+        <select name="language" id="language">
+            <option value="am">🇪🇹 Amh</option>
+            <option value="en">🇬🇧 Eng</option>
+            <option value="or">🇪🇹 Afa</option>
+            <option value="fr">🇫🇷 Fr</option>
+        </select>
+    </div>
+    
 
-    </header>
+</header>
 
     <hr>
  
-    <nav>
-        <a href="#">Home</a> |
+    <nav class="navigation">
+        <a href="#Home"id="Home" >Home</a> |
         <a href="#">Shop</a> |
         <a href="#Categories">Categories</a>
+         <!-- <h3>Categories</h3> -->
         <select name="Categories" id="">
             <h5>Categories</h5>
             <option value="Electronics">Electronics</option>
@@ -66,26 +87,35 @@
         <a href="#">Deals</a> |
         <a href="#">Brands</a> |
         <a href="#">About</a> |
-        <a href="#">Contact</a> |
+        <a href="#Contact">Contact</a> |
         <a href="#">Delivery</a>
     </nav>
+   
 
     <hr>
 
-    <section>
-     
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp714RcBVtgHQv9ULDLfhT4YJ9kJWS_OlwbxDTYHFo-Q&s=10" alt="" srcset="" width="100%" height="500">
-    </section>
+  <section>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp714RcBVtgHQv9ULDLfhT4YJ9kJWS_OlwbxDTYHFo-Q&s=10"
+         alt="Hero Image"
+         width="100%"
+         height="500">
+
+    <br><br>
+<center>
+    <button>Shop Now</button></center>
+</section>
+
    
-     <table>
+     <div>
     <section>
         <h2 id="new-arrivals">New Arrivals</h2>
         <hr>
-        <td>
+        <div>
      <article>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQngxfTXVhF2c0MONPiiqyG2CkWCjjt57PlY1kUStpUNQ&s=10" alt="Product Image" width="200" height="200">
 
         <h2>Wireless Headphones</h2>
+          <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
         <p>
             High-quality wireless headphones with noise cancellation and
@@ -97,12 +127,14 @@
         <button>Add to Cart</button>
         <button>Buy Now</button>
     </article>
-    </td>
-    <td> 
+    </div>
+    <div> 
     <article>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT8TyrFEdSXVZf3n9pHQnF6qn2axRI08u-ui5azxBdQ&s=10" alt="Smart Watch" width="200" height="200">
 
     <h2>Smart Watch</h2>
+
+      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
     <p>
         Stylish smartwatch with heart rate monitoring, GPS tracking,
@@ -114,13 +146,14 @@
     <button>Add to Cart</button>
     <button>Buy Now</button>
 </article>
-</td>
+</div>
 
-<td>
+<div>
 <article>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGfA9M99SeC3dnOhzsLnr-uVIXKgrOQARkWJhbwpZeWw&s=10" alt="Bluetooth Speaker" width="200" height="200">
 
     <h2>Bluetooth Speaker</h2>
+      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
     <p>
         Portable Bluetooth speaker with deep bass, waterproof design,
@@ -132,14 +165,16 @@
     <button>Add to Cart</button>
     <button>Buy Now</button>
 </article>
-</td>
+</div>
 
-<td>
+<div>
 
 <article>
     <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA_rq5WcvimiaLzS2hIZaSxuXUsdcYD6Y6ktUgKVxb6Q&s=10" alt="Gaming Mouse" width="200" height="200">
 
     <h2>Gaming Mouse</h2>
+
+    <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
     <p>
         Ergonomic gaming mouse featuring RGB lighting,
@@ -151,14 +186,15 @@
     <button>Add to Cart</button>
     <button>Buy Now</button>
 </article>
-</td>
+</div>
 
-<td>
+<div>
 
 <article>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwlC9nmqpHv8DAiSnRcxKt1xsa6C8bOgMMyKuFspaibA&s=10" alt="Laptop Backpack" width="200" height="200">
 
     <h2>Laptop Backpack</h2>
+    <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
     <p>
         Durable backpack with a padded laptop compartment,
@@ -170,12 +206,13 @@
     <button>Add to Cart</button>
     <button>Buy Now</button>
 </article>
-        </td>
-       <td>
+        </div>
+       <div>
 <article>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI_B6JLaqcyS9sBVFkmol2ItrzXvg3rHmJYPhJBjPozg&s=10" alt="Wireless Keyboard" width="200" height="200">
 
     <h2>Wireless Keyboard</h2>
+      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
     <p>
         Slim wireless keyboard with quiet keys,
@@ -187,8 +224,8 @@
     <button>Add to Cart</button>
     <button>Buy Now</button>
 </article>
-</td>
- </table>
+</div>
+ </div>
 
  <section>
    
@@ -196,14 +233,15 @@
     <h2 id="best">Best Selling</h2>
     <hr>
 
-    <table>
-        <tr>
+    <div>
+        <div>
 
-            <td>
+            <div>
                 <article>
                     <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop" alt="Wireless Headphones" width="200" height="200">
 
                     <h2>Wireless Headphones</h2>
+                      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
                     <p>
                         High-quality wireless headphones with noise cancellation
@@ -214,14 +252,27 @@
 
                     <button>Add to Cart</button>
                     <button>Buy Now</button>
+                    <details>
+    <summary>Details</summary>
+    <ul>
+        <li><strong>Brand:</strong> SoundMax</li>
+        <li><strong>Type:</strong> Wireless Over-Ear</li>
+        <li><strong>Battery:</strong> Up to 30 Hours</li>
+        <li><strong>Noise Cancellation:</strong> Active</li>
+        <li><strong>Connectivity:</strong> Bluetooth 5.3</li>
+        <li><strong>Color:</strong> Black</li>
+        <li><strong>Warranty:</strong> 1 Year</li>
+    </ul>
+</details>
                 </article>
-            </td>
+            </div>
 
-            <td>
+            <div>
                 <article>
                     <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=200&h=200&fit=crop" alt="Smart Watch" width="200" height="200">
 
                     <h2>Smart Watch</h2>
+                      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
                     <p>
                         Stylish smartwatch with heart rate monitoring,
@@ -232,14 +283,31 @@
 
                     <button>Add to Cart</button>
                     <button>Buy Now</button>
+                     
                 </article>
-            </td>
+                 <details>
+        <!-- <summary>View Product Details</summary> -->
+<a href="#"></a>
+        <ul>
+            <li><strong>Brand:</strong> SmartTech</li>
+            <li><strong>Display:</strong> 1.8-inch HD Touch Screen</li>
+            <li><strong>Battery:</strong> Up to 7 days</li>
+            <li><strong>Connectivity:</strong> Bluetooth 5.2</li>
+            <li><strong>GPS:</strong> Built-in GPS</li>
+            <li><strong>Heart Rate Monitor:</strong> Yes</li>
+            <li><strong>Water Resistance:</strong> IP68</li>
+            <li><strong>Color:</strong> Black</li>
+            <li><strong>Warranty:</strong> 1 Year</li>
+        </ul>
+    </details>
+            </div>
 
-            <td>
+            <div>
                 <article>
                     <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=200&h=200&fit=crop" alt="Bluetooth Speaker" width="200" height="200">
 
                     <h2>Bluetooth Speaker</h2>
+                      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
                     <p>
                         Portable Bluetooth speaker with deep bass and
@@ -250,14 +318,27 @@
 
                     <button>Add to Cart</button>
                     <button>Buy Now</button>
+                    <details>
+    <summary>Details</summary>
+    <ul>
+        <li><strong>Brand:</strong> BoomSound</li>
+        <li><strong>Power:</strong> 20W</li>
+        <li><strong>Battery:</strong> Up to 20 Hours</li>
+        <li><strong>Connectivity:</strong> Bluetooth 5.2</li>
+        <li><strong>Water Resistance:</strong> IPX7</li>
+        <li><strong>Color:</strong> Blue</li>
+        <li><strong>Warranty:</strong> 1 Year</li>
+    </ul>
+</details>
                 </article>
-            </td>
+            </div>
 
-            <td>
+            <div>
                 <article>
                     <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?w=200&h=200&fit=crop" alt="Gaming Mouse" width="200" height="200">
 
                     <h2>Gaming Mouse</h2>
+                      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
                     <p>
                         RGB gaming mouse with adjustable DPI and
@@ -268,14 +349,27 @@
 
                     <button>Add to Cart</button>
                     <button>Buy Now</button>
+                    <details>
+    <summary>Details</summary>
+    <ul>
+        <li><strong>Brand:</strong> GamePro</li>
+        <li><strong>DPI:</strong> Up to 16,000</li>
+        <li><strong>Buttons:</strong> 7 Programmable</li>
+        <li><strong>Lighting:</strong> RGB</li>
+        <li><strong>Connection:</strong> Wired USB</li>
+        <li><strong>Color:</strong> Black</li>
+        <li><strong>Warranty:</strong> 2 Years</li>
+    </ul>
+</details>
                 </article>
-            </td>
+            </div>
 
-            <td>
+            <div>
                 <article>
                     <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&h=200&fit=crop" alt="Laptop Backpack" width="200" height="200">
 
                     <h2>Laptop Backpack</h2>
+                      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
 
                     <p>
                         Water-resistant backpack with a padded laptop
@@ -286,15 +380,27 @@
 
                     <button>Add to Cart</button>
                     <button>Buy Now</button>
+                    <details>
+    <summary>View Details</summary>
+    <ul>
+        <li><strong>Brand:</strong> TravelPack</li>
+        <li><strong>Material:</strong> Water-Resistant Polyester</li>
+        <li><strong>Laptop Size:</strong> Up to 15.6 Inches</li>
+        <li><strong>USB Port:</strong> Yes</li>
+        <li><strong>Compartments:</strong> 6</li>
+        <li><strong>Color:</strong> Gray</li>
+        <li><strong>Warranty:</strong> 1 Year</li>
+    </ul>
+</details>
                 </article>
-            </td>
+            </div>
 
-            <td>
+            <div>
                 <article>
                     <img src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=200&h=200&fit=crop" alt="Wireless Keyboard" width="200" height="200">
 
                     <h2>Wireless Keyboard</h2>
-
+                      <p>⭐⭐⭐⭐☆ (4.0/5)</p>
                     <p>
                         Slim wireless keyboard with rechargeable battery
                         and quiet typing experience.
@@ -304,15 +410,78 @@
 
                     <button>Add to Cart</button>
                     <button>Buy Now</button>
+                    <details>
+    <summary>View Details</summary>
+    <ul>
+        <li><strong>Brand:</strong> KeyMaster</li>
+        <li><strong>Type:</strong> Wireless Keyboard</li>
+        <li><strong>Battery:</strong> Rechargeable</li>
+        <li><strong>Connectivity:</strong> Bluetooth 5.1</li>
+        <li><strong>Layout:</strong> Full Size</li>
+        <li><strong>Color:</strong> White</li>
+        <li><strong>Warranty:</strong> 1 Year</li>
+    </ul>
+</details>
                 </article>
-            </td>
+            </div>
 
-        </tr>
-    </table>
+        </div>
+    </div>
 </section>
 
 <br>
 <br>
+<section>
+    <h2>Subscribe to Our Newsletter</h2>
+
+
+    <p>
+        Stay updated with our latest products, exclusive deals, special offers,
+        and seasonal discounts. Join thousands of happy customers and never
+        miss a great shopping opportunity!
+    </p>
+
+    <form>
+        <label for="fullname">Full Name</label><br>
+        <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            placeholder="Enter your full name"
+            required
+        >
+        <br><br>
+
+        <label for="email">Email Address</label><br>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+        >
+        <br><br>
+
+        <input type="submit" value="Subscribe">
+        <input type="reset" value="Clear">
+    </form>
+
+    <p>
+        ✔ Exclusive Discounts<br>
+        ✔ Early Access to New Arrivals<br>
+        ✔ Weekly Shopping Tips<br>
+        ✔ Members-Only Promotions
+    </p>
+
+    <small>
+        We respect your privacy. Your information will never be shared with
+        third parties. You can unsubscribe at any time.
+    </small>
+</section>
+
+ <center>
+   <a href=""> <button id="Home">Back to Top</button></a>
+ </center>
     
  <footer>
     <hr>
