@@ -179,3 +179,224 @@ header a:hover {
      border: 4px solid #1829e1;
     color: #000000;
 }
+#new-arrivals {
+   margin: 20px;
+   font-weight: bold;
+}
+
+/* =========================================================
+   Product listing (New Arrivals / Best Selling)
+   ========================================================= */
+
+section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section h2 {
+    margin: 30px 0 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    background: #f0f0f0;
+}
+
+.product-card h2 {
+    font-size: 1.05rem;
+    margin: 0 0 6px;
+}
+
+.product-card .stars {
+    color: #e2a300;
+    font-size: 0.85rem;
+    margin: 0 0 8px;
+}
+
+.product-card .stars span {
+    color: #999;
+}
+
+.product-card p {
+    font-size: 0.88rem;
+    color: #666;
+    margin: 0 0 10px;
+    flex-grow: 1;
+}
+
+.product-card .price {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #001E60;
+    margin: 0 0 10px;
+    flex-grow: 0;
+}
+
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.btn-row button {
+    flex: 1;
+    padding: 10px 8px;
+    border-radius: 6px;
+    border: 1px solid #0053E2;
+    background: #fff;
+    color: #0053E2;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+
+.btn-row button.primary {
+    background: #0053E2;
+    color: #fff;
+}
+
+.btn-row button:hover {
+    background: #001E60;
+    color: #fff;
+    border-color: #001E60;
+}
+
+.product-card details {
+    font-size: 0.82rem;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: auto;
+}
+
+.product-card details summary {
+    cursor: pointer;
+    color: #0053E2;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.product-card details ul {
+    margin: 0;
+    padding-left: 18px;
+    color: #666;
+}
+
+.product-card details li {
+    margin-bottom: 3px;
+}
+
+/* =========================================================
+   JS-driven UI: cart badge, toast, form feedback, scrolled header
+   ========================================================= */
+
+#cart {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#cart-count {
+    background: #ff9900;
+    color: #001E60;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sticky-wrap.is-scrolled {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.btn-row button:disabled {
+    background: #28a745;
+    border-color: #28a745;
+    color: #fff;
+    cursor: default;
+}
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #001E60;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+    z-index: 2000;
+    max-width: 280px;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-msg {
+    margin-top: 10px;
+    font-size: 0.88rem;
+    min-height: 1.2em;
+}
+
+.form-msg.success {
+    color: #1e7e34;
+}
+
+.form-msg.error {
+    color: #c0392b;
+}
+
+#back-to-top {
+    border: none;
+    background: #0053E2;
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background .2s;
+}
+
+#back-to-top:hover {
+    background: #001E60;
+}
