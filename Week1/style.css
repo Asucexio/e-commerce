@@ -151,3 +151,31 @@ header a:hover {
 .navigation button:hover {
    border: #0053E2 solid 1px;
 }
+
+.hero-section {
+ position:relative;
+ diplay:inline-block;
+}
+/* .hero-section img {
+    width: 100%;
+    height: auto;
+    display: block;
+} */
+.shop-now-btn {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 8px 18px;
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+.shop-now-btn:hover {
+     border: 4px solid #1829e1;
+    color: #000000;
+}
