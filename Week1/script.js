@@ -1,13 +1,14 @@
  
 
 document.addEventListener('DOMContentLoaded', () => {
+
  
   const heroSlides = Array.from(document.querySelectorAll('.hero-slide'));
   const heroDots = Array.from(document.querySelectorAll('.hero-dots .dot'));
   const heroSection = document.getElementById('hero');
   let heroIndex = 0;
   let heroTimer = null;
-  const HERO_INTERVAL = 2000;
+  const HERO_INTERVAL = 1000;
 
   function goToSlide(index) {
     heroSlides.forEach((slide, i) => slide.classList.toggle('active', i === index));
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     heroDots.forEach(dot => {
       dot.addEventListener('click', () => {
         goToSlide(Number(dot.dataset.slide));
-        startHeroTimer();  
+        startHeroTimer(); // reset the clock after a manual jump
       });
     });
 
@@ -43,7 +44,81 @@ document.addEventListener('DOMContentLoaded', () => {
       heroSection.addEventListener('mouseleave', startHeroTimer);
     }
   }
+
  
+  const deliveryBtn = document.getElementById('delivery-btn');
+  const deliveryPanel = document.getElementById('delivery-panel');
+  const deliveryLabel = document.getElementById('delivery-label');
+  const deliveryCountry = document.getElementById('delivery-country');
+  const deliveryCity = document.getElementById('delivery-city');
+  const deliverySave = document.getElementById('delivery-save');
+  const DELIVERY_KEY = 'marikato-delivery';
+
+  function loadDeliveryPref() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(DELIVERY_KEY));
+      if (saved && saved.city) {
+        deliveryLabel.textContent = saved.city;
+        if (deliveryCountry) deliveryCountry.value = saved.country || 'Ethiopia';
+        if (deliveryCity) deliveryCity.value = saved.city;
+        if (saved.method) {
+          const radio = document.querySelector(`input[name="delivery-method"][value="${saved.method}"]`);
+          if (radio) radio.checked = true;
+        }
+      }
+    } catch (err) {
+       
+    }
+  }
+
+  function openDeliveryPanel() {
+    deliveryPanel.classList.add('open');
+    deliveryBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDeliveryPanel() {
+    deliveryPanel.classList.remove('open');
+    deliveryBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (deliveryBtn && deliveryPanel) {
+    loadDeliveryPref();
+
+    deliveryBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = deliveryPanel.classList.contains('open');
+      isOpen ? closeDeliveryPanel() : openDeliveryPanel();
+    });
+
+    deliveryPanel.addEventListener('click', e => e.stopPropagation());
+
+    document.addEventListener('click', () => closeDeliveryPanel());
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeDeliveryPanel();
+    });
+
+    if (deliverySave) {
+      deliverySave.addEventListener('click', () => {
+        const country = deliveryCountry ? deliveryCountry.value : 'Ethiopia';
+        const city = (deliveryCity && deliveryCity.value.trim()) || 'Wolaita Sodo';
+        const methodInput = document.querySelector('input[name="delivery-method"]:checked');
+        const method = methodInput ? methodInput.value : 'Delivery';
+
+        deliveryLabel.textContent = city;
+        closeDeliveryPanel();
+        showToast(`${method} set for ${city}, ${country}`);
+
+        try {
+          localStorage.setItem(DELIVERY_KEY, JSON.stringify({ country, city, method }));
+        } catch (err) {
+          
+        }
+      });
+    }
+  }
+
+  
   const toastEl = document.getElementById('toast');
   let toastTimer = null;
 
@@ -55,7 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
   }
 
- 
+  /* ---------------------------------------------------------
+     Cart
+  --------------------------------------------------------- */
   const cartCountEl = document.getElementById('cart-count');
   let cartCount = 0;
 
@@ -77,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartBadge();
         showToast(`${productName} added to cart`);
 
-        // brief visual confirmation on the button itself
+        
         const original = addBtn.textContent;
         addBtn.textContent = 'Added ✓';
         addBtn.disabled = true;
@@ -91,12 +168,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (buyBtn) {
       buyBtn.addEventListener('click', () => {
         showToast(`Heading to checkout with ${productName}...`);
- 
+        // TODO: replace with a real redirect, e.g. window.location.href = '/checkout?item=...'
       });
     }
   });
 
- 
+  /* ---------------------------------------------------------
+     Smooth-scroll navigation (top nav + hero "Shop Now")
+  --------------------------------------------------------- */
   function scrollToTarget(target) {
     if (target === 'top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -120,14 +199,21 @@ document.addEventListener('DOMContentLoaded', () => {
     backToTopBtn.addEventListener('click', () => scrollToTarget('top'));
   }
 
-   
+  /* ---------------------------------------------------------
+     Sticky header gets a stronger shadow once the page scrolls,
+     so it reads as "lifted" above content instead of blending in.
+  --------------------------------------------------------- */
   const stickyWrap = document.querySelector('.sticky-wrap');
   window.addEventListener('scroll', () => {
     if (!stickyWrap) return;
     stickyWrap.classList.toggle('is-scrolled', window.scrollY > 10);
   });
 
-   
+  /* ---------------------------------------------------------
+     Live product search — filters every .product-card on the
+     page (both New Arrivals and Best Selling) by product name
+     and description as the user types, no page reload needed.
+  --------------------------------------------------------- */
   const searchForm = document.getElementById('search-form');
   const searchInput = document.getElementById('search-input');
   const noResultsMsg = document.getElementById('no-results-msg');
@@ -162,7 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
- 
+  /* ---------------------------------------------------------
+     Newsletter form — validated + "submitted" in the browser
+     since there's no backend wired up yet.
+  --------------------------------------------------------- */
   const newsletterForm = document.getElementById('newsletter-form');
   const newsletterMsg = document.getElementById('newsletter-msg');
 

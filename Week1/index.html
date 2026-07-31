@@ -22,14 +22,39 @@
                  height="50">
         </div>
 
-        <div>
-            <!-- <div>
-                <select name="delivery" id="delivery">
-                    <option value="ethiopia">Delivery</option>
-                    <option value="kenya">Pickup</option>
-                    <option value="tanzania">Shipping</option>
+        <div class="delivery-wrap" id="delivery-wrap">
+            <button class="delivery-btn" id="delivery-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-map-marker-alt"></i>
+                <span class="delivery-text">
+                    <small>Deliver to</small>
+                    <strong id="delivery-label">Wolaita Sodo</strong>
+                </span>
+                <i class="fa fa-chevron-down delivery-caret"></i>
+            </button>
+
+            <div class="delivery-panel" id="delivery-panel">
+                <h4>Choose your delivery location</h4>
+                <p class="delivery-hint">Pricing, delivery time, and stock depend on your location.</p>
+
+                <label for="delivery-country">Country / Region</label>
+                <select id="delivery-country">
+                    <option value="Ethiopia">🇪🇹 Ethiopia</option>
+                    <option value="Kenya">🇰🇪 Kenya</option>
+                    <option value="Tanzania">🇹🇿 Tanzania</option>
                 </select>
-            </div> -->
+
+                <label for="delivery-city">City</label>
+                <input type="text" id="delivery-city" placeholder="e.g. Wolaita Sodo" value="Wolaita Sodo">
+
+                <fieldset class="delivery-method">
+                    <legend>Method</legend>
+                    <label><input type="radio" name="delivery-method" value="Delivery" checked> Home Delivery</label>
+                    <label><input type="radio" name="delivery-method" value="Pickup"> Store Pickup</label>
+                    <label><input type="radio" name="delivery-method" value="Shipping"> International Shipping</label>
+                </fieldset>
+
+                <button type="button" id="delivery-save" class="delivery-save-btn">Apply</button>
+            </div>
         </div>
 
         <div id="search">
@@ -70,6 +95,7 @@
         <button data-target="newsletter">About</button>
         <button data-target="newsletter">Contact</button>
         <button data-target="newsletter">Delivery</button>
+        <button data-target="newsletter">Local products</button>
     </nav>
 
 </div>
@@ -108,6 +134,111 @@
 <p id="no-results-msg" style="display:none; text-align:center; margin:20px; color:#666;">
     No products match your search.
 </p>
+
+<section>
+    <h2>
+        Ethiopian Local Products
+    </h2>
+    <div class="product-grid">
+
+    <article class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRplTafPicZ18-Ss-c23MwXQYmZXUkp_x8y9Jg-YyzDfA&s=10" alt="Ethiopian Coffee" width="200" height="200">
+        <h2>Ethiopian Coffee Beans</h2>
+        <p class="stars">⭐⭐⭐⭐⭐<span> (5.0/5)</span></p>
+        <p>Premium Yirgacheffe roasted coffee beans with a rich aroma and smooth flavor.</p>
+        <p class="price">850 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80" alt="Berbere Spice" width="200" height="200">
+        <h2>Berbere Spice</h2>
+        <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
+        <p>Traditional Ethiopian berbere spice blend made from natural ingredients.</p>
+        <p class="price">250 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwN3ertnPqO3c8Ab-vA-DvCchfUx_ruckU37VsV9No1w&s=10" alt="Injera" width="200" height="200">
+        <h2>Habesha Kemis</h2>
+        <p class="stars">⭐⭐⭐⭐⭐<span> (4.8/5)</span></p>
+        <p>Beautiful handmade traditional Ethiopian dress with elegant Tibeb embroidery.</p>
+        <p class="price">3,800 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQk6R8EEN1cHyy-5MF4Ym1WokNwf_aFBdhoakB4COPdtm9hm7vLIhuoi5WJ-Ce2ShU9kehQhssXRWxn0qowkVu5DQTrFblRsutZ-TudyKw8YUXNFF8-2KKm7U9c4mbGGpGkZjBH&usqp=CAc">
+        <h2>Ethiopian Leather Sandals</h2>
+        <p class="stars">⭐⭐⭐⭐<span>☆ (4.6/5)</span></p>
+        <p>Handcrafted genuine leather sandals made by Ethiopian artisans.</p>
+        <p class="price">1,450 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?auto=format&fit=crop&w=500&q=80" alt="Organic Honey" width="200" height="200">
+        <h2>Organic Ethiopian Honey</h2>
+        <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
+        <p>Pure natural honey harvested from Ethiopian highland forests.</p>
+        <p class="price">600 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkyagC-vqqCA1aQuVa2AJ0UJUAQRw6Q6SkVrjPquxYjA&s=10">
+        <h2>Netela Scarf</h2>
+        <p class="stars">⭐⭐⭐⭐⭐<span> (4.8/5)</span></p>
+        <p>Soft handwoven Ethiopian Netela for cultural and ceremonial occasions.</p>
+        <p class="price">950 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnhLYcMHIumFOu3dV-ub2xf97gPEcLj03-D1E__AcYmw&s=10">
+        <h2>Coffee Ceremony Set</h2>
+        <p class="stars">⭐⭐⭐⭐⭐<span> (5.0/5)</span></p>
+        <p>Traditional Ethiopian coffee cups and serving set for coffee ceremonies.</p>
+        <p class="price">2,100 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQV2DWw_6s9BqC45eBfdpINpJe7Cl_4Dy6AtO2lJRVg&s=10">
+        <h2>Handwoven Mesob Basket</h2>
+        <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
+        <p>Colorful handmade Mesob basket crafted by Ethiopian artisans.</p>
+        <p class="price">1,750 ETB</p>
+        <div class="btn-row">
+            <button class="primary">Add to Cart</button>
+            <button>Buy Now</button>
+        </div>
+    </article>
+
+</div>
+</section>
 
 <section>
     <h2 id="new-arrivals">New Arrivals</h2>
@@ -184,12 +315,48 @@
                 <button>Buy Now</button>
             </div>
         </article>
+
+        <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1506359368206-1c055e47e971?auto=format&fit=crop&w=500&q=80" alt="Classic Sunglasses" width="200" height="200">
+            <h2>Classic Sunglasses</h2>
+            <p class="stars">⭐⭐⭐⭐<span>☆ (4.2/5)</span></p>
+            <p>UV-protective polarized lenses with a lightweight frame, perfect for everyday wear.</p>
+            <p class="price">$34.99</p>
+            <div class="btn-row">
+                <button class="primary">Add to Cart</button>
+                <button>Buy Now</button>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1543512214-4f76e81f8bfc?auto=format&fit=crop&w=500&q=80" alt="Minimalist Desk Lamp" width="200" height="200">
+            <h2>Minimalist Desk Lamp</h2>
+            <p class="stars">⭐⭐⭐⭐<span>☆ (4.4/5)</span></p>
+            <p>Adjustable cantilever desk lamp with warm and cool light settings for any workspace.</p>
+            <p class="price">$44.99</p>
+            <div class="btn-row">
+                <button class="primary">Add to Cart</button>
+                <button>Buy Now</button>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1544003484-3cd181d17917?auto=format&fit=crop&w=500&q=80" alt="Steel Water Bottle" width="200" height="200">
+            <h2>Steel Water Bottle</h2>
+            <p class="stars">⭐⭐⭐⭐<span>☆ (4.6/5)</span></p>
+            <p>Double-walled stainless steel bottle that keeps drinks cold for 24 hours or hot for 12.</p>
+            <p class="price">$24.99</p>
+            <div class="btn-row">
+                <button class="primary">Add to Cart</button>
+                <button>Buy Now</button>
+            </div>
+        </article>
     </div>
 </section>
- 
+
 <section>
     <h2 id="best">Best Selling</h2>
- 
+
     <div class="product-grid">
         <article class="product-card">
             <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop" alt="Wireless Headphones" width="200" height="200">
@@ -312,7 +479,7 @@
                 </ul>
             </details>
         </article>
- 
+
         <article class="product-card">
             <img src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=200&h=200&fit=crop" alt="Wireless Keyboard" width="200" height="200">
             <h2>Wireless Keyboard</h2>
@@ -332,6 +499,76 @@
                     <li><strong>Connectivity:</strong> Bluetooth 5.1</li>
                     <li><strong>Layout:</strong> Full Size</li>
                     <li><strong>Color:</strong> White</li>
+                    <li><strong>Warranty:</strong> 1 Year</li>
+                </ul>
+            </details>
+        </article>
+
+        <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1615743472612-93b21e520fad?auto=format&fit=crop&w=500&q=80" alt="Running Shoes" width="200" height="200">
+            <h2>Running Shoes</h2>
+            <p class="stars">⭐⭐⭐⭐<span>☆ (4.5/5)</span></p>
+            <p>Lightweight running shoes with breathable mesh and responsive cushioning for daily miles.</p>
+            <p class="price">$79.99</p>
+            <div class="btn-row">
+                <button class="primary">Add to Cart</button>
+                <button>Buy Now</button>
+            </div>
+            <details>
+                <summary>View Details</summary>
+                <ul>
+                    <li><strong>Brand:</strong> StrideFlex</li>
+                    <li><strong>Upper:</strong> Breathable Mesh</li>
+                    <li><strong>Sole:</strong> Responsive Foam</li>
+                    <li><strong>Weight:</strong> 240g (per shoe)</li>
+                    <li><strong>Color:</strong> White/Green</li>
+                    <li><strong>Warranty:</strong> 1 Year</li>
+                </ul>
+            </details>
+        </article>
+
+        <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1579014134953-1580d7f123f3?auto=format&fit=crop&w=500&q=80" alt="Leather Wallet" width="200" height="200">
+            <h2>Leather Wallet</h2>
+            <p class="stars">⭐⭐⭐⭐<span>☆ (4.3/5)</span></p>
+            <p>Slim genuine leather wallet with RFID-blocking card slots and a coin pocket.</p>
+            <p class="price">$29.99</p>
+            <div class="btn-row">
+                <button class="primary">Add to Cart</button>
+                <button>Buy Now</button>
+            </div>
+            <details>
+                <summary>View Details</summary>
+                <ul>
+                    <li><strong>Brand:</strong> Kalibrado</li>
+                    <li><strong>Material:</strong> Genuine Leather</li>
+                    <li><strong>Card Slots:</strong> 6 + Coin Pocket</li>
+                    <li><strong>RFID Blocking:</strong> Yes</li>
+                    <li><strong>Color:</strong> Black</li>
+                    <li><strong>Warranty:</strong> 1 Year</li>
+                </ul>
+            </details>
+        </article>
+
+        <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1583343894790-5cff219de28a?auto=format&fit=crop&w=500&q=80" alt="Wireless Earbuds" width="200" height="200">
+            <h2>Wireless Earbuds</h2>
+            <p class="stars">⭐⭐⭐⭐<span>☆ (4.4/5)</span></p>
+            <p>True wireless earbuds with active noise cancellation and a compact charging case.</p>
+            <p class="price">$59.99</p>
+            <div class="btn-row">
+                <button class="primary">Add to Cart</button>
+                <button>Buy Now</button>
+            </div>
+            <details>
+                <summary>View Details</summary>
+                <ul>
+                    <li><strong>Brand:</strong> SoundMax</li>
+                    <li><strong>Type:</strong> True Wireless In-Ear</li>
+                    <li><strong>Battery:</strong> 6h (24h with case)</li>
+                    <li><strong>Noise Cancellation:</strong> Active</li>
+                    <li><strong>Connectivity:</strong> Bluetooth 5.3</li>
+                    <li><strong>Color:</strong> Black</li>
                     <li><strong>Warranty:</strong> 1 Year</li>
                 </ul>
             </details>
