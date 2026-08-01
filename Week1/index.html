@@ -122,10 +122,27 @@
             <span id="wishlist-count">0</span>
         </div>
 
-        <div id="cart">
-            <i class="fa badge fa-lg">&#xf07a;</i>
-            <span id="cart-count">0</span>
+        <div class="cart-wrap" id="cart-wrap">
+            <button class="cart-btn" id="cart-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa badge fa-lg">&#xf07a;</i>
+                <span id="cart-count">0</span>
+            </button>
+
+            <div class="cart-panel" id="cart-panel">
+                <h4>Your Cart</h4>
+                <div id="cart-items"></div>
+                <p id="cart-empty-msg" class="delivery-hint" style="display:none;">Your cart is empty.</p>
+                <div class="cart-subtotal" id="cart-subtotal" style="display:none;">
+                    <span>Subtotal</span>
+                    <strong id="cart-subtotal-amount">$0.00</strong>
+                </div>
+                <button type="button" id="cart-checkout-btn" class="delivery-save-btn" style="display:none;">Checkout</button>
+            </div>
         </div>
+
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+            <i class="fa fa-moon" id="theme-icon"></i>
+        </button>
 
         <div>
             <select name="language" id="language">

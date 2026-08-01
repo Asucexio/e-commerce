@@ -129,30 +129,224 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------------------------------------------------------
-     Cart
+     Dark mode — persisted to localStorage, falls back to the
+     visitor's OS-level preference on first visit.
   --------------------------------------------------------- */
+  const THEME_KEY = 'marikato-theme';
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (themeIcon) themeIcon.className = theme === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+    if (themeToggleBtn) themeToggleBtn.setAttribute('aria-pressed', String(theme === 'dark'));
+  }
+
+  function loadTheme() {
+    let saved = null;
+    try {
+      saved = localStorage.getItem(THEME_KEY);
+    } catch (err) {
+      saved = null;
+    }
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+  }
+
+  loadTheme();
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      applyTheme(next);
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch (err) {
+        // ignore
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Cart — persisted to localStorage as line items (name,
+     price, qty), with a dropdown panel for review/checkout.
+  --------------------------------------------------------- */
+  const CART_KEY = 'marikato-cart';
+  const cartBtn = document.getElementById('cart-btn');
+  const cartPanel = document.getElementById('cart-panel');
   const cartCountEl = document.getElementById('cart-count');
-  let cartCount = 0;
+  const cartItemsEl = document.getElementById('cart-items');
+  const cartEmptyMsg = document.getElementById('cart-empty-msg');
+  const cartSubtotalEl = document.getElementById('cart-subtotal');
+  const cartSubtotalAmount = document.getElementById('cart-subtotal-amount');
+  const cartCheckoutBtn = document.getElementById('cart-checkout-btn');
+
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function saveCart(items) {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+    } catch (err) {
+      // localStorage unavailable — fail silently
+    }
+  }
 
   function updateCartBadge() {
-    if (cartCountEl) cartCountEl.textContent = cartCount;
+    if (!cartCountEl) return;
+    cartCountEl.textContent = getCart().reduce((sum, item) => sum + item.qty, 0);
   }
+
+  function renderCart() {
+    if (!cartItemsEl) return;
+    const items = getCart();
+    cartItemsEl.innerHTML = '';
+
+    const hasItems = items.length > 0;
+    if (cartEmptyMsg) cartEmptyMsg.style.display = hasItems ? 'none' : 'block';
+    if (cartSubtotalEl) cartSubtotalEl.style.display = hasItems ? 'flex' : 'none';
+    if (cartCheckoutBtn) cartCheckoutBtn.style.display = hasItems ? 'block' : 'none';
+    if (!hasItems) return;
+
+    let subtotal = 0;
+
+    items.forEach(item => {
+      subtotal += item.price * item.qty;
+
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+
+      const info = document.createElement('div');
+      info.className = 'cart-item-info';
+      const nameDiv = document.createElement('div');
+      nameDiv.className = 'cart-item-name';
+      nameDiv.textContent = item.name;
+      const priceDiv = document.createElement('div');
+      priceDiv.className = 'cart-item-price';
+      priceDiv.textContent = `$${item.price.toFixed(2)} each`;
+      info.append(nameDiv, priceDiv);
+
+      const qtyWrap = document.createElement('div');
+      qtyWrap.className = 'cart-item-qty';
+      const decBtn = document.createElement('button');
+      decBtn.type = 'button';
+      decBtn.className = 'cart-qty-btn';
+      decBtn.textContent = '−';
+      decBtn.setAttribute('aria-label', `Decrease ${item.name} quantity`);
+      const qtySpan = document.createElement('span');
+      qtySpan.textContent = item.qty;
+      const incBtn = document.createElement('button');
+      incBtn.type = 'button';
+      incBtn.className = 'cart-qty-btn';
+      incBtn.textContent = '+';
+      incBtn.setAttribute('aria-label', `Increase ${item.name} quantity`);
+      qtyWrap.append(decBtn, qtySpan, incBtn);
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'cart-item-remove';
+      removeBtn.innerHTML = '<i class="fa fa-trash"></i>';
+      removeBtn.setAttribute('aria-label', `Remove ${item.name} from cart`);
+
+      decBtn.addEventListener('click', () => changeQty(item.name, -1));
+      incBtn.addEventListener('click', () => changeQty(item.name, 1));
+      removeBtn.addEventListener('click', () => removeFromCart(item.name));
+
+      row.append(info, qtyWrap, removeBtn);
+      cartItemsEl.appendChild(row);
+    });
+
+    if (cartSubtotalAmount) cartSubtotalAmount.textContent = `$${subtotal.toFixed(2)}`;
+  }
+
+  function addToCart(name, price) {
+    const items = getCart();
+    const existing = items.find(i => i.name === name);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      items.push({ name, price, qty: 1 });
+    }
+    saveCart(items);
+    updateCartBadge();
+    renderCart();
+  }
+
+  function changeQty(name, delta) {
+    let items = getCart();
+    const item = items.find(i => i.name === name);
+    if (!item) return;
+    item.qty += delta;
+    items = item.qty <= 0 ? items.filter(i => i.name !== name) : items;
+    saveCart(items);
+    updateCartBadge();
+    renderCart();
+  }
+
+  function removeFromCart(name) {
+    saveCart(getCart().filter(i => i.name !== name));
+    updateCartBadge();
+    renderCart();
+  }
+
+  function openCartPanel() {
+    if (!cartPanel) return;
+    cartPanel.classList.add('open');
+    if (cartBtn) cartBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeCartPanel() {
+    if (!cartPanel) return;
+    cartPanel.classList.remove('open');
+    if (cartBtn) cartBtn.setAttribute('aria-expanded', 'false');
+  }
+
   updateCartBadge();
+  renderCart();
+
+  if (cartBtn && cartPanel) {
+    cartBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = cartPanel.classList.contains('open');
+      isOpen ? closeCartPanel() : openCartPanel();
+    });
+
+    cartPanel.addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('click', () => closeCartPanel());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeCartPanel();
+    });
+  }
+
+  if (cartCheckoutBtn) {
+    cartCheckoutBtn.addEventListener('click', () => {
+      showToast('Heading to checkout...');
+      closeCartPanel();
+      // TODO: replace with a real redirect, e.g. window.location.href = '/checkout'
+    });
+  }
 
   document.querySelectorAll('.product-card').forEach(card => {
     const nameEl = card.querySelector('h2');
     const productName = nameEl ? nameEl.textContent.trim() : 'Item';
+
+    const priceEl = card.querySelector('.price');
+    const productPrice = priceEl ? parseFloat(priceEl.textContent.replace(/[^0-9.]/g, '')) || 0 : 0;
 
     const addBtn = card.querySelector('.btn-row .primary');
     const buyBtn = card.querySelector('.btn-row button:not(.primary)');
 
     if (addBtn) {
       addBtn.addEventListener('click', () => {
-        cartCount += 1;
-        updateCartBadge();
+        addToCart(productName, productPrice);
         showToast(`${productName} added to cart`);
 
-        
         const original = addBtn.textContent;
         addBtn.textContent = 'Added ✓';
         addBtn.disabled = true;
@@ -165,6 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (buyBtn) {
       buyBtn.addEventListener('click', () => {
+        addToCart(productName, productPrice);
         showToast(`Heading to checkout with ${productName}...`);
         // TODO: replace with a real redirect, e.g. window.location.href = '/checkout?item=...'
       });
