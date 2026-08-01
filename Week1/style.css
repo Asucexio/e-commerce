@@ -281,10 +281,170 @@ header a:hover {
     color: #ffffff;
 }
 
+/* =========================================================
+   Account: login / sign up dropdown
+   ========================================================= */
+
+.account-wrap {
+    position: relative;
+}
+
+.account-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 300px;
+    background: #fff;
+    color: #222;
+    border-radius: 10px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+    padding: 20px;
+    z-index: 1100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+
+.account-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    background: #E9F1FE;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.auth-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+
+.auth-tab.active {
+    background: #0053E2;
+    color: #fff;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    margin: 10px 0 4px;
+}
+
+.auth-form label:first-of-type {
+    margin-top: 0;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.auth-form input:focus {
+    border-color: #0053E2;
+}
+
+.auth-form .form-msg {
+    margin: 8px 0 0;
+    min-height: 0;
+}
+
+.auth-form .delivery-save-btn {
+    margin-top: 16px;
+}
+
+.account-greeting {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.account-email {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 16px;
+    word-break: break-all;
+}
+
+.logout-btn {
+    background: #c0392b;
+}
+
+.logout-btn:hover {
+    background: #922b21;
+}
+
+@media (max-width: 700px) {
+    .account-panel {
+        right: 50%;
+        transform: translate(50%, -8px);
+    }
+    .account-panel.open {
+        transform: translate(50%, 0);
+    }
+}
+
 #cart {
     position: relative;
     display: inline-block;
     margin-right: 20px;
+}
+
+#wishlist {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    margin-right: 20px;
+    padding: 4px 6px;
+    border-radius: 8px;
+    transition: background .2s ease;
+}
+
+#wishlist:hover,
+#wishlist.active {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+#wishlist.active #wishlist-icon {
+    color: #ff5c5c;
+}
+
+#wishlist-count {
+    background: #ff9900;
+    color: #001E60;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .badge {
@@ -481,6 +641,7 @@ section h2 {
 }
 
 .product-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -489,6 +650,34 @@ section h2 {
     padding: 16px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.wishlist-toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    color: #999;
+    font-size: 15px;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform .15s ease, color .15s ease;
+}
+
+.wishlist-toggle:hover {
+    transform: scale(1.1);
+}
+
+.wishlist-toggle.active {
+    color: #ff5c5c;
 }
 
 .product-card:hover {

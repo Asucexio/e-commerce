@@ -1,5 +1,3 @@
- 
-
 document.addEventListener('DOMContentLoaded', () => {
 
  
@@ -249,6 +247,109 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------------------------------------------------------
+     Wishlist — heart-toggle on every product card, persisted
+     to localStorage, reflected in the header count, and
+     click-to-filter "show wishlist only" on the header icon.
+  --------------------------------------------------------- */
+  const WISHLIST_KEY = 'marikato-wishlist';
+  const wishlistWrap = document.getElementById('wishlist');
+  const wishlistIcon = document.getElementById('wishlist-icon');
+  const wishlistCountEl = document.getElementById('wishlist-count');
+  const noResultsDefaultText = noResultsMsg ? noResultsMsg.dataset.defaultText : '';
+  let wishlistFilterActive = false;
+
+  function getWishlist() {
+    try {
+      return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function saveWishlist(list) {
+    try {
+      localStorage.setItem(WISHLIST_KEY, JSON.stringify(list));
+    } catch (err) {
+      // localStorage unavailable — fail silently
+    }
+  }
+
+  function updateWishlistBadge() {
+    if (wishlistCountEl) wishlistCountEl.textContent = getWishlist().length;
+  }
+
+  function setHeartState(btn, saved) {
+    btn.classList.toggle('active', saved);
+    btn.setAttribute('aria-pressed', String(saved));
+    const icon = btn.querySelector('i');
+    if (icon) icon.className = saved ? 'fas fa-heart' : 'far fa-heart';
+  }
+
+  function applyWishlistFilter() {
+    const saved = getWishlist();
+
+    allCards.forEach(card => {
+      const name = card.querySelector('h2')?.textContent.trim() || '';
+      const isSaved = saved.includes(name);
+      card.style.display = (!wishlistFilterActive || isSaved) ? '' : 'none';
+    });
+
+    if (searchInput && wishlistFilterActive) searchInput.value = '';
+    if (wishlistWrap) wishlistWrap.classList.toggle('active', wishlistFilterActive);
+
+    if (noResultsMsg) {
+      noResultsMsg.textContent = wishlistFilterActive
+        ? 'Your wishlist is empty.'
+        : noResultsDefaultText;
+      noResultsMsg.style.display = (wishlistFilterActive && saved.length === 0) ? 'block' : 'none';
+    }
+  }
+
+  allCards.forEach(card => {
+    const nameEl = card.querySelector('h2');
+    const productName = nameEl ? nameEl.textContent.trim() : 'Item';
+
+    const heartBtn = document.createElement('button');
+    heartBtn.type = 'button';
+    heartBtn.className = 'wishlist-toggle';
+    heartBtn.setAttribute('aria-label', `Save ${productName} to wishlist`);
+    heartBtn.innerHTML = '<i class="far fa-heart"></i>';
+    card.prepend(heartBtn);
+
+    setHeartState(heartBtn, getWishlist().includes(productName));
+
+    heartBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const list = getWishlist();
+      const idx = list.indexOf(productName);
+      const nowSaved = idx === -1;
+
+      if (nowSaved) {
+        list.push(productName);
+        showToast(`${productName} added to wishlist`);
+      } else {
+        list.splice(idx, 1);
+        showToast(`${productName} removed from wishlist`);
+      }
+
+      saveWishlist(list);
+      setHeartState(heartBtn, nowSaved);
+      updateWishlistBadge();
+      if (wishlistFilterActive) applyWishlistFilter();
+    });
+  });
+
+  updateWishlistBadge();
+
+  if (wishlistWrap) {
+    wishlistWrap.addEventListener('click', () => {
+      wishlistFilterActive = !wishlistFilterActive;
+      applyWishlistFilter();
+      if (wishlistFilterActive) scrollToTarget('new-arrivals');
+    });
+  }
+
+  /* ---------------------------------------------------------
      Newsletter form — validated + "submitted" in the browser
      since there's no backend wired up yet.
   --------------------------------------------------------- */
@@ -279,6 +380,218 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!newsletterMsg) return;
     newsletterMsg.textContent = text;
     newsletterMsg.className = 'form-msg' + (type ? ` ${type}` : '');
+  }
+
+  /* ---------------------------------------------------------
+     Account: login / sign up
+     NOTE: This is a front-end-only demo. Accounts + passwords
+     are stored in localStorage on the visitor's own browser —
+     fine for prototyping, but NOT secure for a real site. A
+     production version needs a real backend that hashes
+     passwords and issues sessions/tokens server-side.
+  --------------------------------------------------------- */
+  const USERS_KEY = 'marikato-users';
+  const SESSION_KEY = 'marikato-session';
+
+  const accountWrap = document.getElementById('account-wrap');
+  const accountBtn = document.getElementById('account-btn');
+  const accountPanel = document.getElementById('account-panel');
+  const accountLabel = document.getElementById('account-label');
+
+  const panelGuest = document.getElementById('account-panel-guest');
+  const panelUser = document.getElementById('account-panel-user');
+  const accountUserName = document.getElementById('account-user-name');
+  const accountUserEmail = document.getElementById('account-user-email');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  const authTabs = document.querySelectorAll('.auth-tab');
+  const loginForm = document.getElementById('login-form');
+  const signupForm = document.getElementById('signup-form');
+  const loginError = document.getElementById('login-error');
+  const signupError = document.getElementById('signup-error');
+
+  function getUsers() {
+    try {
+      return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function saveUsers(users) {
+    try {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    } catch (err) {
+      // localStorage unavailable (e.g. private browsing) — fail silently
+    }
+  }
+
+  function getSession() {
+    try {
+      return JSON.parse(localStorage.getItem(SESSION_KEY));
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function setSession(email) {
+    try {
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ email }));
+    } catch (err) {
+      // ignore
+    }
+  }
+
+  function clearSession() {
+    try {
+      localStorage.removeItem(SESSION_KEY);
+    } catch (err) {
+      // ignore
+    }
+  }
+
+  // Extremely simple non-cryptographic hash so we at least avoid
+  // storing raw passwords in plain text. Not real security.
+  function simpleHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return String(hash);
+  }
+
+  function findUser(email) {
+    const normalized = email.trim().toLowerCase();
+    return getUsers().find(u => u.email === normalized);
+  }
+
+  function refreshAccountUI() {
+    const session = getSession();
+    const user = session ? findUser(session.email) : null;
+
+    if (user) {
+      accountLabel.textContent = user.name.split(' ')[0];
+      panelGuest.style.display = 'none';
+      panelUser.style.display = 'block';
+      accountUserName.textContent = user.name;
+      accountUserEmail.textContent = user.email;
+    } else {
+      accountLabel.textContent = 'Account';
+      panelGuest.style.display = 'block';
+      panelUser.style.display = 'none';
+    }
+  }
+
+  function openAccountPanel() {
+    accountPanel.classList.add('open');
+    accountBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeAccountPanel() {
+    accountPanel.classList.remove('open');
+    accountBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function switchAuthTab(tab) {
+    authTabs.forEach(btn => btn.classList.toggle('active', btn.dataset.authTab === tab));
+    loginForm.style.display = tab === 'login' ? 'flex' : 'none';
+    signupForm.style.display = tab === 'signup' ? 'flex' : 'none';
+    loginError.textContent = '';
+    signupError.textContent = '';
+  }
+
+  if (accountBtn && accountPanel) {
+    refreshAccountUI();
+
+    accountBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = accountPanel.classList.contains('open');
+      isOpen ? closeAccountPanel() : openAccountPanel();
+    });
+
+    accountPanel.addEventListener('click', e => e.stopPropagation());
+
+    document.addEventListener('click', () => closeAccountPanel());
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAccountPanel();
+    });
+
+    authTabs.forEach(tab => {
+      tab.addEventListener('click', () => switchAuthTab(tab.dataset.authTab));
+    });
+
+    if (signupForm) {
+      signupForm.addEventListener('submit', e => {
+        e.preventDefault();
+        signupError.textContent = '';
+
+        const name = document.getElementById('signup-name').value.trim();
+        const email = document.getElementById('signup-email').value.trim().toLowerCase();
+        const password = document.getElementById('signup-password').value;
+        const confirm = document.getElementById('signup-password-confirm').value;
+
+        if (!name || !email || !password || !confirm) {
+          signupError.textContent = 'Please fill in every field.';
+          return;
+        }
+        if (password.length < 6) {
+          signupError.textContent = 'Password must be at least 6 characters.';
+          return;
+        }
+        if (password !== confirm) {
+          signupError.textContent = 'Passwords do not match.';
+          return;
+        }
+        if (findUser(email)) {
+          signupError.textContent = 'An account with that email already exists.';
+          return;
+        }
+
+        const users = getUsers();
+        users.push({ name, email, passwordHash: simpleHash(password) });
+        saveUsers(users);
+        setSession(email);
+
+        signupForm.reset();
+        refreshAccountUI();
+        closeAccountPanel();
+        showToast(`Welcome, ${name}! Your account was created.`);
+      });
+    }
+
+    if (loginForm) {
+      loginForm.addEventListener('submit', e => {
+        e.preventDefault();
+        loginError.textContent = '';
+
+        const email = document.getElementById('login-email').value.trim().toLowerCase();
+        const password = document.getElementById('login-password').value;
+
+        const user = findUser(email);
+        if (!user || user.passwordHash !== simpleHash(password)) {
+          loginError.textContent = 'Incorrect email or password.';
+          return;
+        }
+
+        setSession(email);
+        loginForm.reset();
+        refreshAccountUI();
+        closeAccountPanel();
+        showToast(`Welcome back, ${user.name.split(' ')[0]}!`);
+      });
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        clearSession();
+        refreshAccountUI();
+        closeAccountPanel();
+        switchAuthTab('login');
+        showToast('You have been logged out.');
+      });
+    }
   }
 
 });

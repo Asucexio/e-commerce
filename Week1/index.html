@@ -64,8 +64,62 @@
             </form>
         </div>
 
-        <div>
-            <button class="account-btn"><i class="fa fa-user"></i>Account</button>
+        <div class="account-wrap" id="account-wrap">
+            <button class="account-btn" id="account-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user"></i><span id="account-label">Account</span>
+            </button>
+
+            <div class="account-panel" id="account-panel">
+                <!-- Shown when logged out -->
+                <div id="account-panel-guest">
+                    <div class="auth-tabs">
+                        <button type="button" class="auth-tab active" data-auth-tab="login">Log In</button>
+                        <button type="button" class="auth-tab" data-auth-tab="signup">Sign Up</button>
+                    </div>
+
+                    <form id="login-form" class="auth-form">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" required>
+
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Your password" required minlength="6">
+
+                        <p id="login-error" class="form-msg error"></p>
+
+                        <button type="submit" class="delivery-save-btn">Log In</button>
+                    </form>
+
+                    <form id="signup-form" class="auth-form" style="display:none;">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Your name" required>
+
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="you@example.com" required>
+
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="At least 6 characters" required minlength="6">
+
+                        <label for="signup-password-confirm">Confirm Password</label>
+                        <input type="password" id="signup-password-confirm" placeholder="Repeat password" required minlength="6">
+
+                        <p id="signup-error" class="form-msg error"></p>
+
+                        <button type="submit" class="delivery-save-btn">Create Account</button>
+                    </form>
+                </div>
+
+                <!-- Shown when logged in -->
+                <div id="account-panel-user" style="display:none;">
+                    <p class="account-greeting">Hi, <strong id="account-user-name">there</strong>!</p>
+                    <p class="account-email" id="account-user-email"></p>
+                    <button type="button" id="logout-btn" class="delivery-save-btn logout-btn">Log Out</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="wishlist" title="View wishlist">
+            <i class="fa fa-heart badge fa-lg" id="wishlist-icon"></i>
+            <span id="wishlist-count">0</span>
         </div>
 
         <div id="cart">
@@ -131,7 +185,7 @@
 
 <div>
 
-<p id="no-results-msg" style="display:none; text-align:center; margin:20px; color:#666;">
+<p id="no-results-msg" data-default-text="No products match your search." style="display:none; text-align:center; margin:20px; color:#666;">
     No products match your search.
 </p>
 
