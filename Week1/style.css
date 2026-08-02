@@ -600,6 +600,7 @@ header a:hover {
     justify-content: center;
     gap: 30px;
     background: #E9F1FE;
+    flex-wrap: wrap;
 }
 
 .navigation button {
@@ -612,6 +613,38 @@ header a:hover {
 }
 .navigation button:hover {
    border: #0053E2 solid 1px;
+}
+
+.nav-toggle {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: #E9F1FE;
+    border: none;
+    border-top: 1px solid rgba(0, 83, 226, 0.15);
+    color: #001E60;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .nav-toggle {
+        display: flex;
+    }
+    .navigation {
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+        text-align: center;
+    }
+    .navigation.open {
+        display: flex;
+    }
 }
 
 .hero-section {
@@ -770,6 +803,26 @@ section h2 {
     gap: 24px;
     margin-bottom: 40px;
     width: 100%;
+}
+
+.sort-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin: -6px 0 18px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.sort-toolbar select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    background: #fff;
+    color: #333;
 }
 
 .product-card {
@@ -1127,4 +1180,339 @@ section h2 {
     background: #1b2130;
     color: #dfe3ec;
     border: 1px solid #2a3142;
+}
+
+[data-theme="dark"] .nav-toggle {
+    background: #1b2130;
+    color: #dfe3ec;
+    border-top-color: #2a3142;
+}
+
+[data-theme="dark"] .sort-toolbar select {
+    background: #1b2130;
+    color: #dfe3ec;
+    border-color: #2a3142;
+}
+
+[data-theme="dark"] .modal {
+    background: #1b2130;
+    color: #dfe3ec;
+}
+
+[data-theme="dark"] .modal-close {
+    color: #a8b0c0;
+}
+
+[data-theme="dark"] #checkout-form input,
+[data-theme="dark"] #checkout-form label,
+[data-theme="dark"] .checkout-summary-item {
+    color: #dfe3ec;
+    border-color: #2a3142;
+}
+
+[data-theme="dark"] #checkout-form input {
+    background: #12151c;
+}
+
+[data-theme="dark"] .order-item {
+    background: #12151c;
+    border-color: #2a3142;
+    color: #dfe3ec;
+}
+
+/* =========================================================
+   Checkout modal
+   ========================================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 3000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility .2s;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    position: relative;
+    background: #fff;
+    color: #222;
+    width: 100%;
+    max-width: 440px;
+    max-height: 88vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: translateY(16px);
+    transition: transform .2s ease;
+}
+
+.modal-overlay.open .modal {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+}
+
+.modal-close:hover {
+    color: #222;
+}
+
+.modal h3 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+.checkout-summary-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.85rem;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.checkout-summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 2px solid #ddd;
+}
+
+#checkout-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#checkout-form label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    margin: 12px 0 4px;
+}
+
+#checkout-form input {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+#checkout-form input:focus {
+    border-color: #0053E2;
+}
+
+#checkout-success-view h3 {
+    color: #1e7e34;
+}
+
+/* =========================================================
+   Order history (inside the account panel)
+   ========================================================= */
+
+.order-item {
+    background: #f7f9fc;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+.order-item-id {
+    font-weight: 700;
+    color: #0053E2;
+    margin-bottom: 2px;
+}
+
+.order-item-meta {
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.order-item-total {
+    font-weight: 700;
+}
+/* =========================================================
+   Accessibility: skip-to-content link
+   ========================================================= */
+
+.skip-link {
+    position: absolute;
+    top: -48px;
+    left: 8px;
+    background: #001E60;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    z-index: 3000;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: top .2s ease;
+}
+
+.skip-link:focus {
+    top: 8px;
+}
+
+/* =========================================================
+   Checkout: promo code row + success-view action buttons
+   ========================================================= */
+
+.promo-row {
+    display: flex;
+    gap: 8px;
+}
+
+.promo-row input {
+    flex: 1;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.promo-row input:focus {
+    border-color: #0053E2;
+}
+
+.promo-row button {
+    padding: 0 16px;
+    background: #0053E2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+.promo-row button:hover {
+    background: #001E60;
+}
+
+#checkout-promo-msg.success {
+    color: #1e7e34;
+}
+
+#checkout-promo-msg.error {
+    color: #c0392b;
+}
+
+.checkout-summary-discount {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #1e7e34;
+    margin-top: 4px;
+}
+
+.checkout-success-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.checkout-success-actions .delivery-save-btn {
+    margin-top: 0;
+}
+
+/* =========================================================
+   Low-stock urgency badge on product cards
+   ========================================================= */
+
+.stock-badge {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #c0392b;
+    margin: -4px 0 8px;
+}
+
+/* =========================================================
+   Recently Viewed strip
+   ========================================================= */
+
+#recently-viewed .product-grid {
+    margin-bottom: 30px;
+}
+
+/* Print: only the receipt content should appear on paper */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #checkout-success-view,
+    #checkout-success-view * {
+        visibility: visible;
+    }
+    #checkout-success-view {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    .checkout-success-actions {
+        display: none;
+    }
+}
+
+[data-theme="dark"] .promo-row input {
+    background: #12151c;
+    color: #dfe3ec;
+    border-color: #2a3142;
+}
+
+[data-theme="dark"] .order-item {
+    background: #1b2130;
+    border-color: #2a3142;
+}
+
+[data-theme="dark"] .order-item-meta {
+    color: #a8b0c0;
+}
+
+.recently-viewed-card {
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.recently-viewed-card h2 {
+    font-size: 1.05rem;
+    margin: 0 0 6px;
+}
+
+.highlight-card {
+    animation: highlight-pulse 1.5s ease;
+}
+
+@keyframes highlight-pulse {
+    0% { box-shadow: 0 0 0 4px rgba(0, 83, 226, 0.5); }
+    100% { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
 }

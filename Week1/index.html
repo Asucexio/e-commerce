@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marikato</title>
+    <meta name="description" content="Marikato — shop Ethiopian local products, electronics, fashion and more, with delivery across Ethiopia.">
+    <meta name="theme-color" content="#0053E2">
+    <title>Marikato — Online Shopping in Ethiopia</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230053E2'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
     <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<a href="#hero" class="skip-link">Skip to main content</a>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -112,6 +117,10 @@
                 <div id="account-panel-user" style="display:none;">
                     <p class="account-greeting">Hi, <strong id="account-user-name">there</strong>!</p>
                     <p class="account-email" id="account-user-email"></p>
+                    <button type="button" id="order-history-toggle" class="delivery-save-btn" style="background:#0053E2; margin-top:8px;">
+                        <i class="fa fa-receipt"></i> Order History
+                    </button>
+                    <div id="order-history-list" style="display:none; margin-top:12px; max-height:200px; overflow-y:auto;"></div>
                     <button type="button" id="logout-btn" class="delivery-save-btn logout-btn">Log Out</button>
                 </div>
             </div>
@@ -155,7 +164,11 @@
 
     </header>
 
-    <nav class="navigation">
+    <button type="button" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navigation">
+        <i class="fa fa-bars"></i> Menu
+    </button>
+
+    <nav class="navigation" id="navigation">
         <button data-target="top">Home</button>
         <button data-target="new-arrivals">Shop</button>
         <button data-target="new-arrivals">Categories</button>
@@ -174,7 +187,7 @@
 <hr>
 
  
-<div class="hero-section" id="hero">
+<div class="hero-section" id="hero" tabindex="-1">
 
     <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1920&q=80')"></div>
@@ -249,7 +262,7 @@
     </article>
 
     <article class="product-card">
-        <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQk6R8EEN1cHyy-5MF4Ym1WokNwf_aFBdhoakB4COPdtm9hm7vLIhuoi5WJ-Ce2ShU9kehQhssXRWxn0qowkVu5DQTrFblRsutZ-TudyKw8YUXNFF8-2KKm7U9c4mbGGpGkZjBH&usqp=CAc">
+        <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQk6R8EEN1cHyy-5MF4Ym1WokNwf_aFBdhoakB4COPdtm9hm7vLIhuoi5WJ-Ce2ShU9kehQhssXRWxn0qowkVu5DQTrFblRsutZ-TudyKw8YUXNFF8-2KKm7U9c4mbGGpGkZjBH&usqp=CAc" alt="Ethiopian Leather Sandals" width="200" height="200" loading="lazy">
         <h2>Ethiopian Leather Sandals</h2>
         <p class="stars">⭐⭐⭐⭐<span>☆ (4.6/5)</span></p>
         <p>Handcrafted genuine leather sandals made by Ethiopian artisans.</p>
@@ -273,7 +286,7 @@
     </article>
 
     <article class="product-card">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkyagC-vqqCA1aQuVa2AJ0UJUAQRw6Q6SkVrjPquxYjA&s=10">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkyagC-vqqCA1aQuVa2AJ0UJUAQRw6Q6SkVrjPquxYjA&s=10" alt="Netela Scarf" width="200" height="200" loading="lazy">
         <h2>Netela Scarf</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.8/5)</span></p>
         <p>Soft handwoven Ethiopian Netela for cultural and ceremonial occasions.</p>
@@ -285,7 +298,7 @@
     </article>
 
     <article class="product-card">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnhLYcMHIumFOu3dV-ub2xf97gPEcLj03-D1E__AcYmw&s=10">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnhLYcMHIumFOu3dV-ub2xf97gPEcLj03-D1E__AcYmw&s=10" alt="Coffee Ceremony Set" width="200" height="200" loading="lazy">
         <h2>Coffee Ceremony Set</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (5.0/5)</span></p>
         <p>Traditional Ethiopian coffee cups and serving set for coffee ceremonies.</p>
@@ -297,7 +310,7 @@
     </article>
 
     <article class="product-card">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQV2DWw_6s9BqC45eBfdpINpJe7Cl_4Dy6AtO2lJRVg&s=10">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQV2DWw_6s9BqC45eBfdpINpJe7Cl_4Dy6AtO2lJRVg&s=10" alt="Handwoven Mesob Basket" width="200" height="200" loading="lazy">
         <h2>Handwoven Mesob Basket</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
         <p>Colorful handmade Mesob basket crafted by Ethiopian artisans.</p>
@@ -650,6 +663,12 @@
 
     <br>
     <br>
+
+    <section id="recently-viewed" style="display:none;">
+        <h2>Recently Viewed</h2>
+        <div class="product-grid" id="recently-viewed-grid"></div>
+    </section>
+
     <section id="newsletter">
         <h2>Subscribe to Our Newsletter</h2>
 
@@ -711,16 +730,16 @@
         <h3>Quick Links</h3>
 
         <nav>
-            <a href="#">Home</a> |
-            <a href="#">Shop</a> |
-            <a href="#">Categories</a> |
-            <a href="#">New Arrivals</a> |
-            <a href="#">Best Sellers</a> |
-            <a href="#">Deals</a> |
-            <a href="#">Brands</a> |
-            <a href="#">About</a> |
-            <a href="#">Contact</a> |
-            <a href="#">Delivery</a>
+            <a href="#top" data-target="top">Home</a> |
+            <a href="#new-arrivals" data-target="new-arrivals">Shop</a> |
+            <a href="#new-arrivals" data-target="new-arrivals">Categories</a> |
+            <a href="#new-arrivals" data-target="new-arrivals">New Arrivals</a> |
+            <a href="#best" data-target="best">Best Sellers</a> |
+            <a href="#best" data-target="best">Deals</a> |
+            <a href="#new-arrivals" data-target="new-arrivals">Brands</a> |
+            <a href="#newsletter" data-target="newsletter">About</a> |
+            <a href="#newsletter" data-target="newsletter">Contact</a> |
+            <a href="#newsletter" data-target="newsletter">Delivery</a>
         </nav>
 
         <h3>Customer Service</h3>
@@ -744,6 +763,58 @@
         <p>&copy; 2026 Marikato. All Rights Reserved.</p>
     </footer>
 
+</div>
+
+<div class="modal-overlay" id="checkout-overlay">
+    <div class="modal" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+        <button type="button" class="modal-close" id="checkout-close" aria-label="Close checkout">&times;</button>
+
+        <div id="checkout-form-view">
+            <h3 id="checkout-title">Checkout</h3>
+
+            <div id="checkout-summary"></div>
+
+            <form id="checkout-form">
+                <label for="checkout-name">Full Name</label>
+                <input type="text" id="checkout-name" required>
+
+                <label for="checkout-address">Delivery Address</label>
+                <input type="text" id="checkout-address" placeholder="Street, house/apartment no." required>
+
+                <label for="checkout-city">City</label>
+                <input type="text" id="checkout-city" required>
+
+                <label for="checkout-promo">Promo Code (optional)</label>
+                <div class="promo-row">
+                    <input type="text" id="checkout-promo" placeholder="e.g. MARIKATO10">
+                    <button type="button" id="checkout-promo-apply">Apply</button>
+                </div>
+                <p id="checkout-promo-msg" class="form-msg"></p>
+
+                <fieldset class="delivery-method">
+                    <legend>Payment Method</legend>
+                    <label><input type="radio" name="checkout-payment" value="Card" checked> Credit / Debit Card</label>
+                    <label><input type="radio" name="checkout-payment" value="COD"> Cash on Delivery</label>
+                    <label><input type="radio" name="checkout-payment" value="Mobile"> Mobile Money (Telebirr)</label>
+                </fieldset>
+
+                <p id="checkout-error" class="form-msg error"></p>
+
+                <button type="submit" class="delivery-save-btn">Place Order</button>
+            </form>
+        </div>
+
+        <div id="checkout-success-view" style="display:none;">
+            <h3>Order Confirmed 🎉</h3>
+            <p>Thank you! Your order <strong id="checkout-order-id"></strong> has been placed.</p>
+            <p id="checkout-order-total" style="margin-top:6px; font-weight:600;"></p>
+            <p style="margin-top:10px; font-size:13px; color:#666;">A confirmation would normally be emailed to you. You can review this order any time under Account &rarr; Order History.</p>
+            <div class="checkout-success-actions">
+                <button type="button" id="checkout-print-btn" class="delivery-save-btn" style="background:#fff; color:#0053E2; border:1px solid #0053E2;">Print Receipt</button>
+                <button type="button" id="checkout-done-btn" class="delivery-save-btn">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="script.js"></script>
