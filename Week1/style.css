@@ -1,4 +1,6 @@
-* {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*  {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -7,6 +9,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Wraps header + navigation so they stick together as one unit.
@@ -799,6 +802,12 @@ section {
 
 section h2 {
     margin: 30px 0 20px;
+    padding-left: 14px;
+    border-left: 4px solid #0053E2;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: #001E60;
 }
 
 .product-grid {
@@ -870,8 +879,8 @@ section h2 {
 }
 
 .product-card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(0, 83, 226, 0.14), 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-6px);
 }
 
 .product-card img {
@@ -883,7 +892,8 @@ section h2 {
     background: #f0f0f0;
 }
 
-.product-card h2 {
+.product-card h2,
+.product-card h3 {
     font-size: 1.05rem;
     margin: 0 0 6px;
 }
@@ -933,14 +943,23 @@ section h2 {
 }
 
 .btn-row button.primary {
-    background: #0053E2;
+    background: linear-gradient(135deg, #0053E2 0%, #0a3fbe 100%);
     color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(0, 83, 226, 0.3);
+    transition: background .2s ease, transform .15s ease, box-shadow .15s ease;
 }
 
 .btn-row button:hover {
     background: #001E60;
     color: #fff;
     border-color: #001E60;
+}
+
+.btn-row button.primary:hover {
+    background: linear-gradient(135deg, #0042c8 0%, #082ea0 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 83, 226, 0.4);
 }
 
 .product-card details {
@@ -1735,4 +1754,107 @@ footer a:hover {
 
 [data-theme="dark"] footer {
     background: #0a0e18;
+}
+
+/* =========================================================
+   Category filter bar — pill buttons between nav and products
+   ========================================================= */
+
+#category-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 14px 3%;
+    background: #f0f5ff;
+    border-bottom: 1px solid rgba(0, 83, 226, 0.12);
+}
+
+#category-filter-bar .cat-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-right: 4px;
+    white-space: nowrap;
+}
+
+.cat-pill {
+    padding: 7px 18px;
+    border-radius: 999px;
+    border: 1.5px solid #c5d5f7;
+    background: #fff;
+    color: #0053E2;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease, border-color .18s ease,
+                transform .15s ease, box-shadow .15s ease;
+    white-space: nowrap;
+}
+
+.cat-pill:hover {
+    background: #e8f0fd;
+    border-color: #0053E2;
+    transform: translateY(-1px);
+}
+
+.cat-pill.active {
+    background: linear-gradient(135deg, #0053E2 0%, #0a3fbe 100%);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(0, 83, 226, 0.3);
+}
+
+[data-theme="dark"] #category-filter-bar {
+    background: #151b28;
+    border-bottom-color: #2a3142;
+}
+
+[data-theme="dark"] #category-filter-bar .cat-label {
+    color: #a8b0c0;
+}
+
+[data-theme="dark"] .cat-pill {
+    background: #1b2130;
+    border-color: #2a3142;
+    color: #8fb4ff;
+}
+
+[data-theme="dark"] .cat-pill:hover {
+    background: #252c3d;
+    border-color: #8fb4ff;
+}
+
+[data-theme="dark"] .cat-pill.active {
+    background: linear-gradient(135deg, #0053E2 0%, #0a3fbe 100%);
+    color: #fff;
+    border-color: transparent;
+}
+
+[data-theme="dark"] section h2 {
+    color: #f2f4f9;
+}
+
+/* =========================================================
+   Custom slim scrollbar (webkit)
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 83, 226, 0.25);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 83, 226, 0.45);
 }

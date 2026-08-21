@@ -8,6 +8,9 @@
     <title>Marikato — Online Shopping in Ethiopia</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230053E2'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
     <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -185,6 +188,17 @@
 </div>
 
 <hr>
+<!-- Category filter bar -->
+<div id="category-filter-bar" role="toolbar" aria-label="Filter products by category">
+    <span class="cat-label">Filter:</span>
+    <button class="cat-pill active" data-cat="all" type="button">All</button>
+    <button class="cat-pill" data-cat="food" type="button">🌿 Food &amp; Spices</button>
+    <button class="cat-pill" data-cat="fashion" type="button">👗 Fashion</button>
+    <button class="cat-pill" data-cat="electronics" type="button">📱 Electronics</button>
+    <button class="cat-pill" data-cat="home" type="button">🏠 Home &amp; Crafts</button>
+    <button class="cat-pill" data-cat="accessories" type="button">💼 Accessories</button>
+</div>
+
 
  
 <div class="hero-section" id="hero" tabindex="-1">
@@ -225,9 +239,9 @@
     </h2>
     <div class="product-grid">
 
-    <article class="product-card">
+    <article class="product-card" data-category="food">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRplTafPicZ18-Ss-c23MwXQYmZXUkp_x8y9Jg-YyzDfA&s=10" alt="Ethiopian Coffee" width="200" height="200">
-        <h2>Ethiopian Coffee Beans</h2>
+        <h3>Ethiopian Coffee Beans</h3>
         <p class="stars">⭐⭐⭐⭐⭐<span> (5.0/5)</span></p>
         <p>Premium Yirgacheffe roasted coffee beans with a rich aroma and smooth flavor.</p>
         <p class="price">850 ETB</p>
@@ -248,9 +262,9 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="food">
         <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80" alt="Berbere Spice" width="200" height="200">
-        <h2>Berbere Spice</h2>
+        <h3>Berbere Spice</h3>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
         <p>Traditional Ethiopian berbere spice blend made from natural ingredients.</p>
         <p class="price">250 ETB</p>
@@ -270,9 +284,9 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="fashion">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwN3ertnPqO3c8Ab-vA-DvCchfUx_ruckU37VsV9No1w&s=10" alt="Injera" width="200" height="200">
-        <h2>Habesha Kemis</h2>
+        <h3>Habesha Kemis</h3>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.8/5)</span></p>
         <p>Beautiful handmade traditional Ethiopian dress with elegant Tibeb embroidery.</p>
         <p class="price">3,800 ETB</p>
@@ -293,9 +307,9 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="fashion">
         <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQk6R8EEN1cHyy-5MF4Ym1WokNwf_aFBdhoakB4COPdtm9hm7vLIhuoi5WJ-Ce2ShU9kehQhssXRWxn0qowkVu5DQTrFblRsutZ-TudyKw8YUXNFF8-2KKm7U9c4mbGGpGkZjBH&usqp=CAc" alt="Ethiopian Leather Sandals" width="200" height="200" loading="lazy">
-        <h2>Ethiopian Leather Sandals</h2>
+        <h3>Ethiopian Leather Sandals</h3>
         <p class="stars">⭐⭐⭐⭐<span>☆ (4.6/5)</span></p>
         <p>Handcrafted genuine leather sandals made by Ethiopian artisans.</p>
         <p class="price">1,450 ETB</p>
@@ -316,9 +330,9 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="food">
         <img src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?auto=format&fit=crop&w=500&q=80" alt="Organic Honey" width="200" height="200">
-        <h2>Organic Ethiopian Honey</h2>
+        <h3>Organic Ethiopian Honey</h3>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
         <p>Pure natural honey harvested from Ethiopian highland forests.</p>
         <p class="price">600 ETB</p>
@@ -338,9 +352,9 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="fashion">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkyagC-vqqCA1aQuVa2AJ0UJUAQRw6Q6SkVrjPquxYjA&s=10" alt="Netela Scarf" width="200" height="200" loading="lazy">
-        <h2>Netela Scarf</h2>
+        <h3>Netela Scarf</h3>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.8/5)</span></p>
         <p>Soft handwoven Ethiopian Netela for cultural and ceremonial occasions.</p>
         <p class="price">950 ETB</p>
@@ -360,9 +374,9 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="home">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnhLYcMHIumFOu3dV-ub2xf97gPEcLj03-D1E__AcYmw&s=10" alt="Coffee Ceremony Set" width="200" height="200" loading="lazy">
-        <h2>Coffee Ceremony Set</h2>
+        <h3>Coffee Ceremony Set</h3>
         <p class="stars">⭐⭐⭐⭐⭐<span> (5.0/5)</span></p>
         <p>Traditional Ethiopian coffee cups and serving set for coffee ceremonies.</p>
         <p class="price">2,100 ETB</p>
@@ -381,9 +395,9 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="home">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQV2DWw_6s9BqC45eBfdpINpJe7Cl_4Dy6AtO2lJRVg&s=10" alt="Handwoven Mesob Basket" width="200" height="200" loading="lazy">
-        <h2>Handwoven Mesob Basket</h2>
+        <h3>Handwoven Mesob Basket</h3>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
         <p>Colorful handmade Mesob basket crafted by Ethiopian artisans.</p>
         <p class="price">1,750 ETB</p>
@@ -410,9 +424,9 @@
     <h2 id="new-arrivals">New Arrivals</h2>
  
     <div class="product-grid">
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQngxfTXVhF2c0MONPiiqyG2CkWCjjt57PlY1kUStpUNQ&s=10" alt="Wireless Headphones" width="200" height="200">
-            <h2>Wireless Headphones</h2>
+            <h3>Wireless Headphones</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>High-quality wireless headphones with noise cancellation and up to 30 hours of battery life.</p>
             <p class="price">$99.99</p>
@@ -434,9 +448,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT8TyrFEdSXVZf3n9pHQnF6qn2axRI08u-ui5azxBdQ&s=10" alt="Smart Watch" width="200" height="200">
-            <h2>Smart Watch</h2>
+            <h3>Smart Watch</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Stylish smartwatch with heart rate monitoring, GPS tracking, and a battery life of up to 7 days.</p>
             <p class="price">$149.99</p>
@@ -458,9 +472,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGfA9M99SeC3dnOhzsLnr-uVIXKgrOQARkWJhbwpZeWw&s=10" alt="Bluetooth Speaker" width="200" height="200">
-            <h2>Bluetooth Speaker</h2>
+            <h3>Bluetooth Speaker</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Portable Bluetooth speaker with deep bass, waterproof design, and up to 20 hours of playtime.</p>
             <p class="price">$59.99</p>
@@ -482,9 +496,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA_rq5WcvimiaLzS2hIZaSxuXUsdcYD6Y6ktUgKVxb6Q&s=10" alt="Gaming Mouse" width="200" height="200">
-            <h2>Gaming Mouse</h2>
+            <h3>Gaming Mouse</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Ergonomic gaming mouse featuring RGB lighting, adjustable DPI, and programmable buttons.</p>
             <p class="price">$39.99</p>
@@ -505,9 +519,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="accessories">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwlC9nmqpHv8DAiSnRcxKt1xsa6C8bOgMMyKuFspaibA&s=10" alt="Laptop Backpack" width="200" height="200">
-            <h2>Laptop Backpack</h2>
+            <h3>Laptop Backpack</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Durable backpack with a padded laptop compartment, USB charging port, and water-resistant fabric.</p>
             <p class="price">$49.99</p>
@@ -528,9 +542,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI_B6JLaqcyS9sBVFkmol2ItrzXvg3rHmJYPhJBjPozg&s=10" alt="Wireless Keyboard" width="200" height="200">
-            <h2>Wireless Keyboard</h2>
+            <h3>Wireless Keyboard</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Slim wireless keyboard with quiet keys, rechargeable battery, and multi-device connectivity.</p>
             <p class="price">$69.99</p>
@@ -551,9 +565,9 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="fashion">
             <img src="https://images.unsplash.com/photo-1506359368206-1c055e47e971?auto=format&fit=crop&w=500&q=80" alt="Classic Sunglasses" width="200" height="200">
-            <h2>Classic Sunglasses</h2>
+            <h3>Classic Sunglasses</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.2/5)</span></p>
             <p>UV-protective polarized lenses with a lightweight frame, perfect for everyday wear.</p>
             <p class="price">$34.99</p>
@@ -573,9 +587,9 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="home">
             <img src="https://images.unsplash.com/photo-1543512214-4f76e81f8bfc?auto=format&fit=crop&w=500&q=80" alt="Minimalist Desk Lamp" width="200" height="200">
-            <h2>Minimalist Desk Lamp</h2>
+            <h3>Minimalist Desk Lamp</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.4/5)</span></p>
             <p>Adjustable cantilever desk lamp with warm and cool light settings for any workspace.</p>
             <p class="price">$44.99</p>
@@ -596,9 +610,9 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="home">
             <img src="https://images.unsplash.com/photo-1544003484-3cd181d17917?auto=format&fit=crop&w=500&q=80" alt="Steel Water Bottle" width="200" height="200">
-            <h2>Steel Water Bottle</h2>
+            <h3>Steel Water Bottle</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.6/5)</span></p>
             <p>Double-walled stainless steel bottle that keeps drinks cold for 24 hours or hot for 12.</p>
             <p class="price">$24.99</p>
@@ -624,9 +638,9 @@
     <h2 id="best">Best Selling</h2>
 
     <div class="product-grid">
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop" alt="Wireless Headphones" width="200" height="200">
-            <h2>Wireless Headphones</h2>
+            <h3>Wireless Headphones</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>High-quality wireless headphones with noise cancellation and up to 30 hours of battery life.</p>
             <p class="price">$99.99</p>
@@ -648,9 +662,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=200&h=200&fit=crop" alt="Smart Watch" width="200" height="200">
-            <h2>Smart Watch</h2>
+            <h3>Smart Watch</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Stylish smartwatch with heart rate monitoring, GPS tracking and a 7-day battery life.</p>
             <p class="price">$149.99</p>
@@ -674,9 +688,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=200&h=200&fit=crop" alt="Bluetooth Speaker" width="200" height="200">
-            <h2>Bluetooth Speaker</h2>
+            <h3>Bluetooth Speaker</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Portable Bluetooth speaker with deep bass and up to 20 hours of battery life.</p>
             <p class="price">$59.99</p>
@@ -698,9 +712,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?w=200&h=200&fit=crop" alt="Gaming Mouse" width="200" height="200">
-            <h2>Gaming Mouse</h2>
+            <h3>Gaming Mouse</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>RGB gaming mouse with adjustable DPI and programmable buttons.</p>
             <p class="price">$39.99</p>
@@ -722,9 +736,9 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="accessories">
             <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&h=200&fit=crop" alt="Laptop Backpack" width="200" height="200">
-            <h2>Laptop Backpack</h2>
+            <h3>Laptop Backpack</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Water-resistant backpack with a padded laptop compartment and USB charging port.</p>
             <p class="price">$49.99</p>
@@ -746,9 +760,9 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=200&h=200&fit=crop" alt="Wireless Keyboard" width="200" height="200">
-            <h2>Wireless Keyboard</h2>
+            <h3>Wireless Keyboard</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
             <p>Slim wireless keyboard with rechargeable battery and quiet typing experience.</p>
             <p class="price">$69.99</p>
@@ -770,9 +784,9 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="fashion">
             <img src="https://images.unsplash.com/photo-1615743472612-93b21e520fad?auto=format&fit=crop&w=500&q=80" alt="Running Shoes" width="200" height="200">
-            <h2>Running Shoes</h2>
+            <h3>Running Shoes</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.5/5)</span></p>
             <p>Lightweight running shoes with breathable mesh and responsive cushioning for daily miles.</p>
             <p class="price">$79.99</p>
@@ -793,9 +807,9 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="accessories">
             <img src="https://images.unsplash.com/photo-1579014134953-1580d7f123f3?auto=format&fit=crop&w=500&q=80" alt="Leather Wallet" width="200" height="200">
-            <h2>Leather Wallet</h2>
+            <h3>Leather Wallet</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.3/5)</span></p>
             <p>Slim genuine leather wallet with RFID-blocking card slots and a coin pocket.</p>
             <p class="price">$29.99</p>
@@ -816,9 +830,9 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1583343894790-5cff219de28a?auto=format&fit=crop&w=500&q=80" alt="Wireless Earbuds" width="200" height="200">
-            <h2>Wireless Earbuds</h2>
+            <h3>Wireless Earbuds</h3>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.4/5)</span></p>
             <p>True wireless earbuds with active noise cancellation and a compact charging case.</p>
             <p class="price">$59.99</p>

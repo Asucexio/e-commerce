@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroSection = document.getElementById('hero');
   let heroIndex = 0;
   let heroTimer = null;
-  const HERO_INTERVAL = 1000;
+  const HERO_INTERVAL = 5000; // 5 seconds — was 1000ms (too fast)
 
   function goToSlide(index) {
     heroSlides.forEach((slide, i) => slide.classList.toggle('active', i === index));
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     } catch (err) {
-       
+      console.warn('[Marikato] Could not load delivery preference:', err);
     }
   }
 
@@ -736,6 +736,48 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       filterProducts(searchInput ? searchInput.value : '');
       scrollToTarget('new-arrivals');
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Category filter bar — reads data-category on every
+     .product-card and toggles visibility when the user clicks
+     a pill button. Works in tandem with the search filter.
+  --------------------------------------------------------- */
+  const categoryBar = document.getElementById('category-filter-bar');
+  let activeCategory = 'all';
+
+  function filterByCategory(cat) {
+    activeCategory = cat;
+
+    // Sync pill button active states
+    if (categoryBar) {
+      categoryBar.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === cat);
+      });
+    }
+
+    allCards.forEach(card => {
+      const cardCat = card.dataset.category || 'other';
+      const catMatch = cat === 'all' || cardCat === cat;
+      // Also respect any active search query
+      const searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      const name = card.querySelector('h3')?.textContent.toLowerCase() ||
+                   card.querySelector('h2')?.textContent.toLowerCase() || '';
+      const desc = card.querySelector('p:not(.stars):not(.price)')?.textContent.toLowerCase() || '';
+      const searchMatch = searchQuery === '' || name.includes(searchQuery) || desc.includes(searchQuery);
+      card.style.display = (catMatch && searchMatch) ? '' : 'none';
+    });
+
+    if (noResultsMsg) {
+      const visible = allCards.filter(c => c.style.display !== 'none').length;
+      noResultsMsg.style.display = visible === 0 ? 'block' : 'none';
+    }
+  }
+
+  if (categoryBar) {
+    categoryBar.querySelectorAll('.cat-pill').forEach(btn => {
+      btn.addEventListener('click', () => filterByCategory(btn.dataset.cat));
     });
   }
 
