@@ -218,6 +218,14 @@
 
 <div>
 
+<div id="category-filter-bar" class="category-filter-bar" role="group" aria-label="Filter products by category">
+    <button type="button" class="cat-pill active" data-cat="all">All</button>
+    <button type="button" class="cat-pill" data-cat="local">Local Products</button>
+    <button type="button" class="cat-pill" data-cat="electronics">Electronics</button>
+    <button type="button" class="cat-pill" data-cat="fashion">Fashion</button>
+    <button type="button" class="cat-pill" data-cat="home">Home</button>
+</div>
+
 <p id="no-results-msg" data-default-text="No products match your search." style="display:none; text-align:center; margin:20px; color:#6B6478;">
     No products match your search.
 </p>
@@ -228,7 +236,7 @@
     </h2>
     <div class="product-grid">
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRplTafPicZ18-Ss-c23MwXQYmZXUkp_x8y9Jg-YyzDfA&s=10" alt="Ethiopian Coffee" width="200" height="200">
         <h2>Ethiopian Coffee Beans</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (5.0/5)</span></p>
@@ -251,7 +259,7 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80" alt="Berbere Spice" width="200" height="200">
         <h2>Berbere Spice</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
@@ -273,7 +281,7 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwN3ertnPqO3c8Ab-vA-DvCchfUx_ruckU37VsV9No1w&s=10" alt="Injera" width="200" height="200">
         <h2>Habesha Kemis</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.8/5)</span></p>
@@ -296,7 +304,7 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQk6R8EEN1cHyy-5MF4Ym1WokNwf_aFBdhoakB4COPdtm9hm7vLIhuoi5WJ-Ce2ShU9kehQhssXRWxn0qowkVu5DQTrFblRsutZ-TudyKw8YUXNFF8-2KKm7U9c4mbGGpGkZjBH&usqp=CAc" alt="Ethiopian Leather Sandals" width="200" height="200" loading="lazy">
         <h2>Ethiopian Leather Sandals</h2>
         <p class="stars">⭐⭐⭐⭐<span>☆ (4.6/5)</span></p>
@@ -319,7 +327,7 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?auto=format&fit=crop&w=500&q=80" alt="Organic Honey" width="200" height="200">
         <h2>Organic Ethiopian Honey</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
@@ -341,7 +349,7 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkyagC-vqqCA1aQuVa2AJ0UJUAQRw6Q6SkVrjPquxYjA&s=10" alt="Netela Scarf" width="200" height="200" loading="lazy">
         <h2>Netela Scarf</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.8/5)</span></p>
@@ -363,7 +371,7 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnhLYcMHIumFOu3dV-ub2xf97gPEcLj03-D1E__AcYmw&s=10" alt="Coffee Ceremony Set" width="200" height="200" loading="lazy">
         <h2>Coffee Ceremony Set</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (5.0/5)</span></p>
@@ -384,7 +392,7 @@
         </details>
     </article>
 
-    <article class="product-card">
+    <article class="product-card" data-category="local">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQV2DWw_6s9BqC45eBfdpINpJe7Cl_4Dy6AtO2lJRVg&s=10" alt="Handwoven Mesob Basket" width="200" height="200" loading="lazy">
         <h2>Handwoven Mesob Basket</h2>
         <p class="stars">⭐⭐⭐⭐⭐<span> (4.9/5)</span></p>
@@ -413,7 +421,7 @@
     <h2 id="new-arrivals">New Arrivals</h2>
  
     <div class="product-grid">
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQngxfTXVhF2c0MONPiiqyG2CkWCjjt57PlY1kUStpUNQ&s=10" alt="Wireless Headphones" width="200" height="200">
             <h2>Wireless Headphones</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -437,7 +445,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT8TyrFEdSXVZf3n9pHQnF6qn2axRI08u-ui5azxBdQ&s=10" alt="Smart Watch" width="200" height="200">
             <h2>Smart Watch</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -461,7 +469,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGfA9M99SeC3dnOhzsLnr-uVIXKgrOQARkWJhbwpZeWw&s=10" alt="Bluetooth Speaker" width="200" height="200">
             <h2>Bluetooth Speaker</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -485,7 +493,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA_rq5WcvimiaLzS2hIZaSxuXUsdcYD6Y6ktUgKVxb6Q&s=10" alt="Gaming Mouse" width="200" height="200">
             <h2>Gaming Mouse</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -508,7 +516,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="fashion">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwlC9nmqpHv8DAiSnRcxKt1xsa6C8bOgMMyKuFspaibA&s=10" alt="Laptop Backpack" width="200" height="200">
             <h2>Laptop Backpack</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -531,7 +539,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI_B6JLaqcyS9sBVFkmol2ItrzXvg3rHmJYPhJBjPozg&s=10" alt="Wireless Keyboard" width="200" height="200">
             <h2>Wireless Keyboard</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -554,7 +562,7 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="fashion">
             <img src="https://images.unsplash.com/photo-1506359368206-1c055e47e971?auto=format&fit=crop&w=500&q=80" alt="Classic Sunglasses" width="200" height="200">
             <h2>Classic Sunglasses</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.2/5)</span></p>
@@ -576,7 +584,7 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="home">
             <img src="https://images.unsplash.com/photo-1543512214-4f76e81f8bfc?auto=format&fit=crop&w=500&q=80" alt="Minimalist Desk Lamp" width="200" height="200">
             <h2>Minimalist Desk Lamp</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.4/5)</span></p>
@@ -599,7 +607,7 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="home">
             <img src="https://images.unsplash.com/photo-1544003484-3cd181d17917?auto=format&fit=crop&w=500&q=80" alt="Steel Water Bottle" width="200" height="200">
             <h2>Steel Water Bottle</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.6/5)</span></p>
@@ -627,7 +635,7 @@
     <h2 id="best">Best Selling</h2>
 
     <div class="product-grid">
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop" alt="Wireless Headphones" width="200" height="200">
             <h2>Wireless Headphones</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -651,7 +659,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=200&h=200&fit=crop" alt="Smart Watch" width="200" height="200">
             <h2>Smart Watch</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -677,7 +685,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=200&h=200&fit=crop" alt="Bluetooth Speaker" width="200" height="200">
             <h2>Bluetooth Speaker</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -701,7 +709,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?w=200&h=200&fit=crop" alt="Gaming Mouse" width="200" height="200">
             <h2>Gaming Mouse</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -725,7 +733,7 @@
             </details>
         </article>
  
-        <article class="product-card">
+        <article class="product-card" data-category="fashion">
             <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&h=200&fit=crop" alt="Laptop Backpack" width="200" height="200">
             <h2>Laptop Backpack</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -749,7 +757,7 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=200&h=200&fit=crop" alt="Wireless Keyboard" width="200" height="200">
             <h2>Wireless Keyboard</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.0/5)</span></p>
@@ -773,7 +781,7 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="fashion">
             <img src="https://images.unsplash.com/photo-1615743472612-93b21e520fad?auto=format&fit=crop&w=500&q=80" alt="Running Shoes" width="200" height="200">
             <h2>Running Shoes</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.5/5)</span></p>
@@ -796,7 +804,7 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="fashion">
             <img src="https://images.unsplash.com/photo-1579014134953-1580d7f123f3?auto=format&fit=crop&w=500&q=80" alt="Leather Wallet" width="200" height="200">
             <h2>Leather Wallet</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.3/5)</span></p>
@@ -819,7 +827,7 @@
             </details>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-category="electronics">
             <img src="https://images.unsplash.com/photo-1583343894790-5cff219de28a?auto=format&fit=crop&w=500&q=80" alt="Wireless Earbuds" width="200" height="200">
             <h2>Wireless Earbuds</h2>
             <p class="stars">⭐⭐⭐⭐<span>☆ (4.4/5)</span></p>
