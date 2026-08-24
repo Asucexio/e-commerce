@@ -1057,6 +1057,182 @@ document.addEventListener('DOMContentLoaded', () => {
   renderRecentlyViewed();
 
   /* ---------------------------------------------------------
+     Customer Reviews — a "Write a review" panel injected into
+     every product's details pane, with a clickable star
+     picker and a comment box. Reviews persist to localStorage
+     per product name. Submitting a review blends it into the
+     card's displayed rating (seeded catalog rating + real
+     reviews), so the header stars and the existing price/
+     rating sort toolbar both pick up the new average.
+  --------------------------------------------------------- */
+  const REVIEWS_KEY = 'marikato-reviews';
+
+  function getAllReviews() {
+    try {
+      return JSON.parse(localStorage.getItem(REVIEWS_KEY)) || {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  function getReviewsFor(name) {
+    return getAllReviews()[name] || [];
+  }
+
+  function saveReviewsFor(name, reviews) {
+    try {
+      const all = getAllReviews();
+      all[name] = reviews;
+      localStorage.setItem(REVIEWS_KEY, JSON.stringify(all));
+    } catch (err) {
+      // localStorage unavailable — fail silently
+    }
+  }
+
+  function starString(n) {
+    return '⭐'.repeat(n) + '☆'.repeat(5 - n);
+  }
+
+  function updateCardRatingDisplay(card, seedRating, reviews) {
+    const starsEl = card.querySelector('.stars');
+    if (!starsEl) return;
+
+    const count = reviews.length;
+    // Treat the original catalog rating as if backed by 3 reviews,
+    // so a single new review nudges the average rather than
+    // overriding it outright.
+    const blended = count
+      ? ((seedRating * 3) + reviews.reduce((sum, r) => sum + r.rating, 0)) / (3 + count)
+      : seedRating;
+    const rounded = Math.max(0, Math.min(5, Math.round(blended * 10) / 10));
+    const full = Math.round(rounded);
+    const reviewSuffix = count ? ` · ${count} review${count === 1 ? '' : 's'}` : '';
+
+    starsEl.innerHTML = `${'⭐'.repeat(full)}<span>${'☆'.repeat(5 - full)} (${rounded.toFixed(1)}/5)${reviewSuffix}</span>`;
+  }
+
+  function renderReviewList(listEl, reviews) {
+    listEl.innerHTML = '';
+
+    if (reviews.length === 0) {
+      listEl.innerHTML = '<p class="delivery-hint">No reviews yet — be the first to write one.</p>';
+      return;
+    }
+
+    reviews.slice().reverse().forEach(r => {
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      const dateLabel = new Date(r.date).toLocaleDateString(undefined, {
+        year: 'numeric', month: 'short', day: 'numeric'
+      });
+      item.innerHTML = `
+        <div class="review-item-head">
+          <span class="review-item-stars">${starString(r.rating)}</span>
+          <span class="review-item-author"></span>
+          <span class="review-item-date">${dateLabel}</span>
+        </div>
+        <p class="review-item-comment"></p>
+      `;
+      item.querySelector('.review-item-author').textContent = r.name;
+      item.querySelector('.review-item-comment').textContent = r.comment;
+      listEl.appendChild(item);
+    });
+  }
+
+  allCards.forEach(card => {
+    const details = card.querySelector('details');
+    const name = card.querySelector('h2')?.textContent.trim();
+    const starsEl = card.querySelector('.stars');
+    if (!details || !name || !starsEl) return;
+
+    const seedMatch = starsEl.textContent.match(/\(([\d.]+)\/5\)/);
+    const seedRating = seedMatch ? parseFloat(seedMatch[1]) : 5;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'review-section';
+    wrap.innerHTML = `
+      <h4 class="review-heading">Customer Reviews</h4>
+      <div class="review-list"></div>
+      <form class="review-form">
+        <div class="review-star-picker" role="radiogroup" aria-label="Your rating">
+          ${[1, 2, 3, 4, 5].map(n => `<button type="button" class="review-star-btn" data-value="${n}" aria-label="${n} star${n === 1 ? '' : 's'}">☆</button>`).join('')}
+        </div>
+        <input type="text" class="review-name-input" placeholder="Your name" maxlength="60">
+        <textarea class="review-comment-input" placeholder="Share your thoughts on this product..." maxlength="500" rows="2"></textarea>
+        <p class="form-msg error review-form-msg"></p>
+        <button type="submit" class="delivery-save-btn">Submit Review</button>
+      </form>
+    `;
+    details.appendChild(wrap);
+
+    const listEl = wrap.querySelector('.review-list');
+    const form = wrap.querySelector('.review-form');
+    const starBtns = Array.from(wrap.querySelectorAll('.review-star-btn'));
+    const nameInput = wrap.querySelector('.review-name-input');
+    const commentInput = wrap.querySelector('.review-comment-input');
+    const formMsg = wrap.querySelector('.review-form-msg');
+    let selectedRating = 0;
+
+    const session = getSession();
+    const sessionUser = session ? findUser(session.email) : null;
+    if (sessionUser) nameInput.value = sessionUser.name;
+
+    function paintStars(value) {
+      starBtns.forEach(btn => {
+        const on = Number(btn.dataset.value) <= value;
+        btn.textContent = on ? '★' : '☆';
+        btn.classList.toggle('selected', on);
+      });
+    }
+
+    starBtns.forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        selectedRating = Number(btn.dataset.value);
+        paintStars(selectedRating);
+        formMsg.textContent = '';
+      });
+    });
+
+    function refresh() {
+      const reviews = getReviewsFor(name);
+      renderReviewList(listEl, reviews);
+      updateCardRatingDisplay(card, seedRating, reviews);
+    }
+
+    refresh();
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      formMsg.textContent = '';
+
+      const reviewerName = nameInput.value.trim();
+      const comment = commentInput.value.trim();
+
+      if (!selectedRating) {
+        formMsg.textContent = 'Please select a star rating.';
+        return;
+      }
+      if (!reviewerName || !comment) {
+        formMsg.textContent = 'Please add your name and a comment.';
+        return;
+      }
+
+      const reviews = getReviewsFor(name);
+      reviews.push({ name: reviewerName, rating: selectedRating, comment, date: new Date().toISOString() });
+      saveReviewsFor(name, reviews);
+
+      commentInput.value = '';
+      selectedRating = 0;
+      paintStars(0);
+      if (sessionUser) nameInput.value = sessionUser.name;
+
+      refresh();
+      showToast('Thanks for your review!');
+    });
+  });
+
+  /* ---------------------------------------------------------
      Newsletter form — validated + "submitted" in the browser
      since there's no backend wired up yet.
   --------------------------------------------------------- */

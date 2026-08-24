@@ -1077,6 +1077,158 @@ section h2::after {
 }
 
 /* =========================================================
+   Customer reviews — injected into each product card's
+   <details> pane (see script.js) with a star-rating picker
+   and a running list of submitted reviews.
+   ========================================================= */
+
+.review-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--color-border-light);
+}
+
+.review-heading {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 8px;
+}
+
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.review-item {
+    background: var(--color-surface-muted);
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+
+.review-item-head {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 3px;
+}
+
+.review-item-stars {
+    color: var(--color-accent-dark);
+    font-size: 0.75rem;
+    letter-spacing: -1px;
+}
+
+.review-item-author {
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--color-text);
+}
+
+.review-item-date {
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
+    margin-left: auto;
+}
+
+.review-item-comment {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.review-star-picker {
+    display: flex;
+    gap: 2px;
+}
+
+.review-star-btn {
+    background: none;
+    border: none;
+    padding: 2px;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--color-accent-dark);
+    cursor: pointer;
+    transition: transform .1s ease;
+}
+
+.review-star-btn:hover {
+    transform: scale(1.15);
+}
+
+.review-star-btn.selected {
+    color: var(--color-accent);
+}
+
+.review-name-input,
+.review-comment-input {
+    width: 100%;
+    padding: 7px 9px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    outline: none;
+    resize: vertical;
+}
+
+.review-name-input:focus,
+.review-comment-input:focus {
+    border-color: var(--color-primary);
+}
+
+.review-form .form-msg {
+    margin: 0;
+    min-height: 0;
+    font-size: 0.75rem;
+}
+
+.review-form .delivery-save-btn {
+    align-self: flex-start;
+    padding: 7px 16px;
+    font-size: 0.78rem;
+}
+
+[data-theme="dark"] .review-section {
+    border-top-color: #2a3142;
+}
+
+[data-theme="dark"] .review-heading {
+    color: var(--color-surface-muted);
+}
+
+[data-theme="dark"] .review-item {
+    background: #242b3c;
+}
+
+[data-theme="dark"] .review-item-author {
+    color: var(--color-surface-muted);
+}
+
+[data-theme="dark"] .review-item-comment {
+    color: #a8b0c0;
+}
+
+[data-theme="dark"] .review-name-input,
+[data-theme="dark"] .review-comment-input {
+    background: #1b2130;
+    border-color: #2a3142;
+    color: #dfe3ec;
+}
+
+/* =========================================================
    JS-driven UI: cart badge, toast, form feedback, scrolled header
    ========================================================= */
 
