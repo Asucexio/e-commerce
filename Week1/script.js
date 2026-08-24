@@ -446,10 +446,50 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!checkoutSummary) return {};
     checkoutSummary.innerHTML = '';
 
+    if (items.length === 0) {
+      if (checkoutError) checkoutError.textContent = 'Your cart is empty.';
+      closeCheckout();
+      return {};
+    }
+
     items.forEach(item => {
       const row = document.createElement('div');
       row.className = 'checkout-summary-item';
-      row.innerHTML = `<span>${item.name} &times; ${item.qty}</span><span>${formatMoney(item.price * item.qty, item.currency)}</span>`;
+
+      const label = document.createElement('span');
+      label.className = 'checkout-summary-item-label';
+      label.textContent = item.name;
+
+      const qtyWrap = document.createElement('span');
+      qtyWrap.className = 'checkout-summary-qty';
+      const decBtn = document.createElement('button');
+      decBtn.type = 'button';
+      decBtn.className = 'cart-qty-btn';
+      decBtn.textContent = '−';
+      decBtn.setAttribute('aria-label', `Decrease ${item.name} quantity`);
+      const qtySpan = document.createElement('span');
+      qtySpan.textContent = item.qty;
+      const incBtn = document.createElement('button');
+      incBtn.type = 'button';
+      incBtn.className = 'cart-qty-btn';
+      incBtn.textContent = '+';
+      incBtn.setAttribute('aria-label', `Increase ${item.name} quantity`);
+      qtyWrap.append(decBtn, qtySpan, incBtn);
+
+      const priceSpan = document.createElement('span');
+      priceSpan.className = 'checkout-summary-item-price';
+      priceSpan.textContent = formatMoney(item.price * item.qty, item.currency);
+
+      decBtn.addEventListener('click', () => {
+        changeQty(item.name, -1);
+        renderCheckoutSummary(getCart(), promo);
+      });
+      incBtn.addEventListener('click', () => {
+        changeQty(item.name, 1);
+        renderCheckoutSummary(getCart(), promo);
+      });
+
+      row.append(label, qtyWrap, priceSpan);
       checkoutSummary.appendChild(row);
     });
 
