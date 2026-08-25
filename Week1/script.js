@@ -295,23 +295,51 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cartSubtotalAmount) cartSubtotalAmount.textContent = groupedTotalLabel(items);
   }
 
-  function addToCart(name, price, currency) {
+  // Populated once product cards are scanned for stock limits, below.
+  // addToCart/changeQty just read from it — by the time either fires
+  // from a click, the map has already been filled in.
+  const stockLimits = new Map();
+  function getStockLimit(name) {
+    return stockLimits.has(name) ? stockLimits.get(name) : Infinity;
+  }
+
+  function addToCart(name, price, currency, qty = 1) {
     const items = getCart();
+    const max = getStockLimit(name);
     const existing = items.find(i => i.name === name);
+    const currentQty = existing ? existing.qty : 0;
+    const allowedQty = Math.max(0, Math.min(qty, max - currentQty));
+
+    if (allowedQty <= 0) {
+      showToast(`Only ${max} ${name} in stock — you already have the max in your cart.`);
+      return 0;
+    }
+
     if (existing) {
-      existing.qty += 1;
+      existing.qty += allowedQty;
     } else {
-      items.push({ name, price, currency, qty: 1 });
+      items.push({ name, price, currency, qty: allowedQty });
     }
     saveCart(items);
     updateCartBadge();
     renderCart();
+
+    if (allowedQty < qty) {
+      showToast(`Only ${max} ${name} in stock — added ${allowedQty}.`);
+    }
+    return allowedQty;
   }
 
   function changeQty(name, delta) {
     let items = getCart();
     const item = items.find(i => i.name === name);
     if (!item) return;
+
+    if (delta > 0 && item.qty >= getStockLimit(name)) {
+      showToast(`Only ${getStockLimit(name)} ${name} in stock.`);
+      return;
+    }
+
     item.qty += delta;
     items = item.qty <= 0 ? items.filter(i => i.name !== name) : items;
     saveCart(items);
@@ -358,6 +386,12 @@ document.addEventListener('DOMContentLoaded', () => {
     cartCheckoutBtn.addEventListener('click', () => openCheckout());
   }
 
+  /* ---------------------------------------------------------
+     Per-card quantity stepper — lets a shopper pick how many
+     of an item to add before hitting Add to Cart / Buy Now.
+     Clamped to [1, stock limit for that product]; the +
+     button disables once the stepper hits the ceiling.
+  --------------------------------------------------------- */
   document.querySelectorAll('.product-card').forEach(card => {
     const nameEl = card.querySelector('h2');
     const productName = nameEl ? nameEl.textContent.trim() : 'Item';
@@ -365,28 +399,79 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceEl = card.querySelector('.price');
     const { amount: productPrice, currency: productCurrency } = parsePrice(priceEl ? priceEl.textContent : '');
 
+    const btnRow = card.querySelector('.btn-row');
     const addBtn = card.querySelector('.btn-row .primary');
     const buyBtn = card.querySelector('.btn-row button:not(.primary)');
 
+    let selectedQty = 1;
+    const maxStock = getStockLimit(productName);
+    let refreshStepper = () => {}; // no-op if a card ever lacks a btn-row
+
+    if (btnRow) {
+      const stepper = document.createElement('div');
+      stepper.className = 'card-qty-stepper';
+
+      const decBtn = document.createElement('button');
+      decBtn.type = 'button';
+      decBtn.className = 'card-qty-btn';
+      decBtn.textContent = '−';
+      decBtn.setAttribute('aria-label', `Decrease quantity of ${productName}`);
+
+      const qtySpan = document.createElement('span');
+      qtySpan.className = 'card-qty-value';
+      qtySpan.textContent = selectedQty;
+
+      const incBtn = document.createElement('button');
+      incBtn.type = 'button';
+      incBtn.className = 'card-qty-btn';
+      incBtn.textContent = '+';
+      incBtn.setAttribute('aria-label', `Increase quantity of ${productName}`);
+
+      refreshStepper = () => {
+        qtySpan.textContent = selectedQty;
+        decBtn.disabled = selectedQty <= 1;
+        incBtn.disabled = selectedQty >= maxStock;
+      };
+
+      decBtn.addEventListener('click', () => {
+        if (selectedQty > 1) selectedQty -= 1;
+        refreshStepper();
+      });
+
+      incBtn.addEventListener('click', () => {
+        if (selectedQty < maxStock) selectedQty += 1;
+        refreshStepper();
+      });
+
+      refreshStepper();
+      stepper.append(decBtn, qtySpan, incBtn);
+      btnRow.before(stepper);
+    }
+
     if (addBtn) {
       addBtn.addEventListener('click', () => {
-        addToCart(productName, productPrice, productCurrency);
-        showToast(`${productName} added to cart`);
+        const added = addToCart(productName, productPrice, productCurrency, selectedQty);
+        if (added > 0) {
+          showToast(`${added} × ${productName} added to cart`);
 
-        const original = addBtn.textContent;
-        addBtn.textContent = 'Added ✓';
-        addBtn.disabled = true;
-        setTimeout(() => {
-          addBtn.textContent = original;
-          addBtn.disabled = false;
-        }, 1000);
+          const original = addBtn.textContent;
+          addBtn.textContent = 'Added ✓';
+          addBtn.disabled = true;
+          setTimeout(() => {
+            addBtn.textContent = original;
+            addBtn.disabled = false;
+          }, 1000);
+
+          selectedQty = 1;
+          refreshStepper();
+        }
       });
     }
 
     if (buyBtn) {
       buyBtn.addEventListener('click', () => {
-        addToCart(productName, productPrice, productCurrency);
-        openCheckout();
+        const added = addToCart(productName, productPrice, productCurrency, selectedQty);
+        if (added > 0) openCheckout();
       });
     }
   });
@@ -725,10 +810,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const allCards = Array.from(document.querySelectorAll('.product-card'));
 
   /* ---------------------------------------------------------
-     Low-stock urgency badges — deterministic per product name
-     (same product always shows the same "left in stock" count
-     rather than reshuffling on every reload) and lazy-loaded
-     product images for faster initial page loads.
+     Stock limits — deterministic per product name (same
+     product always reports the same stock count rather than
+     reshuffling on every reload). Products that land in the
+     low-stock band also get an urgency badge. Every product
+     gets an entry in stockLimits so the qty stepper and cart
+     can enforce a ceiling even on "plenty in stock" items.
+     Lazy-loaded product images for faster initial page loads.
   --------------------------------------------------------- */
   function hashString(str) {
     let hash = 0;
@@ -744,12 +832,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const name = card.querySelector('h2')?.textContent.trim() || '';
     const seed = hashString(name);
+    const lowStock = seed % 3 === 0;
+    const maxStock = lowStock ? (seed % 5) + 2 : (seed % 20) + 15; // 2-6 low, 15-34 normal
+    stockLimits.set(name, maxStock);
 
-    if (seed % 3 === 0) {
-      const left = (seed % 5) + 2;
+    if (lowStock) {
       const badge = document.createElement('p');
       badge.className = 'stock-badge';
-      badge.textContent = `Only ${left} left in stock!`;
+      badge.textContent = `Only ${maxStock} left in stock!`;
       const priceEl = card.querySelector('.price');
       if (priceEl) priceEl.after(badge);
     }

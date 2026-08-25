@@ -1918,6 +1918,52 @@ section h2::after {
 }
 
 /* =========================================================
+   Per-card quantity stepper (Add to Cart / Buy Now)
+   ========================================================= */
+
+.card-qty-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.card-qty-btn {
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--color-primary);
+}
+
+.card-qty-btn:hover:not(:disabled) {
+    background: var(--color-surface-muted);
+}
+
+.card-qty-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.card-qty-value {
+    min-width: 20px;
+    text-align: center;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .card-qty-btn {
+    background: #12151c;
+    border-color: #2a3142;
+    color: #dfe3ec;
+}
+
+/* =========================================================
    Recently Viewed strip
    ========================================================= */
 
