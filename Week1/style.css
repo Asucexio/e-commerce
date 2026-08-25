@@ -1388,22 +1388,43 @@ section h2::after {
    ========================================================= */
 
 .theme-toggle {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 17px;
-    cursor: pointer;
-    padding: 8px;
-    margin-right: 8px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: background .2s ease;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 14px;
+    margin: 0 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.theme-toggle i {
+    font-size: 15px;
 }
 
 .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.theme-toggle[aria-pressed="true"] i {
+    color: var(--color-accent-light);
+}
+
+@media (max-width: 900px) {
+    .theme-toggle span {
+        display: none;
+    }
+    .theme-toggle {
+        padding: 8px;
+        border-radius: 50%;
+    }
 }
 
 #cart-count {

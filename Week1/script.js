@@ -164,11 +164,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'marikato-theme';
   const themeToggleBtn = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
+  const themeLabel = document.getElementById('theme-label');
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    if (themeIcon) themeIcon.className = theme === 'dark' ? 'fa fa-sun' : 'fa fa-moon';
-    if (themeToggleBtn) themeToggleBtn.setAttribute('aria-pressed', String(theme === 'dark'));
+    if (themeIcon) themeIcon.className = theme === 'dark' ? 'fa fa-moon' : 'fa fa-sun';
+    if (themeLabel) themeLabel.textContent = theme === 'dark' ? 'Dark' : 'Light';
+    if (themeToggleBtn) {
+      themeToggleBtn.setAttribute('aria-pressed', String(theme === 'dark'));
+      themeToggleBtn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    }
   }
 
   function loadTheme() {
