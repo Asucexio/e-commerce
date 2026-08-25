@@ -871,13 +871,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------------------------------------------------------
      Wishlist — heart-toggle on every product card, persisted
-     to localStorage, reflected in the header count, and
-     click-to-filter "show wishlist only" on the header icon.
+     to localStorage, reflected in the header count, and now a
+     full dropdown panel (mirroring the cart panel) that lists
+     saved items with a thumbnail, price, a one-click "Move to
+     Cart", and a remove button — plus a "View All in Grid"
+     action for the old filter-the-page behavior.
   --------------------------------------------------------- */
   const WISHLIST_KEY = 'marikato-wishlist';
-  const wishlistWrap = document.getElementById('wishlist');
+  const wishlistBtn = document.getElementById('wishlist-btn');
+  const wishlistPanel = document.getElementById('wishlist-panel');
   const wishlistIcon = document.getElementById('wishlist-icon');
   const wishlistCountEl = document.getElementById('wishlist-count');
+  const wishlistItemsEl = document.getElementById('wishlist-items');
+  const wishlistEmptyMsg = document.getElementById('wishlist-empty-msg');
+  const wishlistViewAllBtn = document.getElementById('wishlist-view-all-btn');
   const noResultsDefaultText = noResultsMsg ? noResultsMsg.dataset.defaultText : '';
   let wishlistFilterActive = false;
 
@@ -908,6 +915,84 @@ document.addEventListener('DOMContentLoaded', () => {
     if (icon) icon.className = saved ? 'fas fa-heart' : 'far fa-heart';
   }
 
+  function cardHeartBtn(name) {
+    return allCards
+      .find(card => (card.querySelector('h2')?.textContent.trim() || '') === name)
+      ?.querySelector('.wishlist-toggle') || null;
+  }
+
+  function removeFromWishlist(name) {
+    saveWishlist(getWishlist().filter(n => n !== name));
+    const heartBtn = cardHeartBtn(name);
+    if (heartBtn) setHeartState(heartBtn, false);
+    updateWishlistBadge();
+    renderWishlistPanel();
+    if (wishlistFilterActive) applyWishlistFilter();
+  }
+
+  function renderWishlistPanel() {
+    if (!wishlistItemsEl) return;
+    const saved = getWishlist();
+    wishlistItemsEl.innerHTML = '';
+
+    const hasItems = saved.length > 0;
+    if (wishlistEmptyMsg) wishlistEmptyMsg.style.display = hasItems ? 'none' : 'block';
+    if (wishlistViewAllBtn) wishlistViewAllBtn.style.display = hasItems ? 'block' : 'none';
+    if (!hasItems) return;
+
+    saved.forEach(name => {
+      const card = allCards.find(c => (c.querySelector('h2')?.textContent.trim() || '') === name);
+      if (!card) return;
+
+      const imgSrc = card.querySelector('img')?.getAttribute('src') || '';
+      const priceEl = card.querySelector('.price');
+      const { amount, currency } = parsePrice(priceEl ? priceEl.textContent : '');
+
+      const row = document.createElement('div');
+      row.className = 'wishlist-item';
+
+      const img = document.createElement('img');
+      img.className = 'wishlist-item-img';
+      img.src = imgSrc;
+      img.alt = name;
+
+      const info = document.createElement('div');
+      info.className = 'wishlist-item-info';
+      const nameDiv = document.createElement('div');
+      nameDiv.className = 'wishlist-item-name';
+      nameDiv.textContent = name;
+      const priceDiv = document.createElement('div');
+      priceDiv.className = 'wishlist-item-price';
+      priceDiv.textContent = formatMoney(amount, currency);
+      info.append(nameDiv, priceDiv);
+
+      const actions = document.createElement('div');
+      actions.className = 'wishlist-item-actions';
+      const moveBtn = document.createElement('button');
+      moveBtn.type = 'button';
+      moveBtn.className = 'wishlist-move-btn';
+      moveBtn.innerHTML = '<i class="fa fa-cart-plus"></i>';
+      moveBtn.setAttribute('aria-label', `Move ${name} to cart`);
+      moveBtn.title = 'Move to cart';
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'wishlist-item-remove';
+      removeBtn.innerHTML = '<i class="fa fa-times"></i>';
+      removeBtn.setAttribute('aria-label', `Remove ${name} from wishlist`);
+      actions.append(moveBtn, removeBtn);
+
+      moveBtn.addEventListener('click', () => {
+        addToCart(name, amount, currency);
+        removeFromWishlist(name);
+        showToast(`${name} moved to cart`);
+      });
+      removeBtn.addEventListener('click', () => removeFromWishlist(name));
+
+      row.append(img, info, actions);
+      wishlistItemsEl.appendChild(row);
+    });
+  }
+
   function applyWishlistFilter() {
     const saved = getWishlist();
 
@@ -918,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (searchInput && wishlistFilterActive) searchInput.value = '';
-    if (wishlistWrap) wishlistWrap.classList.toggle('active', wishlistFilterActive);
+    if (wishlistBtn) wishlistBtn.classList.toggle('active', wishlistFilterActive);
 
     if (noResultsMsg) {
       noResultsMsg.textContent = wishlistFilterActive
@@ -958,17 +1043,46 @@ document.addEventListener('DOMContentLoaded', () => {
       saveWishlist(list);
       setHeartState(heartBtn, nowSaved);
       updateWishlistBadge();
+      renderWishlistPanel();
       if (wishlistFilterActive) applyWishlistFilter();
     });
   });
 
   updateWishlistBadge();
+  renderWishlistPanel();
 
-  if (wishlistWrap) {
-    wishlistWrap.addEventListener('click', () => {
-      wishlistFilterActive = !wishlistFilterActive;
+  function openWishlistPanel() {
+    if (!wishlistPanel) return;
+    wishlistPanel.classList.add('open');
+    if (wishlistBtn) wishlistBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeWishlistPanel() {
+    if (!wishlistPanel) return;
+    wishlistPanel.classList.remove('open');
+    if (wishlistBtn) wishlistBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (wishlistBtn && wishlistPanel) {
+    wishlistBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = wishlistPanel.classList.contains('open');
+      isOpen ? closeWishlistPanel() : openWishlistPanel();
+    });
+
+    wishlistPanel.addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('click', () => closeWishlistPanel());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeWishlistPanel();
+    });
+  }
+
+  if (wishlistViewAllBtn) {
+    wishlistViewAllBtn.addEventListener('click', () => {
+      wishlistFilterActive = true;
       applyWishlistFilter();
-      if (wishlistFilterActive) scrollToTarget('new-arrivals');
+      closeWishlistPanel();
+      scrollToTarget('new-arrivals');
     });
   }
 

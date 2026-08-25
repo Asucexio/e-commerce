@@ -129,9 +129,18 @@
             </div>
         </div>
 
-        <div id="wishlist" title="View wishlist">
-            <i class="fa fa-heart badge fa-lg" id="wishlist-icon"></i>
-            <span id="wishlist-count">0</span>
+        <div class="wishlist-wrap" id="wishlist-wrap">
+            <button class="wishlist-btn" id="wishlist-btn" type="button" aria-haspopup="true" aria-expanded="false" title="View wishlist">
+                <i class="fa fa-heart badge fa-lg" id="wishlist-icon"></i>
+                <span id="wishlist-count">0</span>
+            </button>
+
+            <div class="wishlist-panel" id="wishlist-panel">
+                <h4>Your Wishlist</h4>
+                <div id="wishlist-items"></div>
+                <p id="wishlist-empty-msg" class="delivery-hint" style="display:none;">Nothing saved yet — tap the heart on any product to add it here.</p>
+                <button type="button" id="wishlist-view-all-btn" class="delivery-save-btn" style="display:none;">View All in Grid</button>
+            </div>
         </div>
 
         <div class="cart-wrap" id="cart-wrap">
