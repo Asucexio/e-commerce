@@ -1038,6 +1038,46 @@
     </div>
 </div>
 
+<!-- Quick View Modal -->
+<div class="modal-overlay" id="quickview-overlay">
+    <div class="modal quickview-modal" id="quickview-modal" role="dialog" aria-modal="true" aria-labelledby="quickview-title">
+        <button type="button" class="modal-close" id="quickview-close" aria-label="Close quick view">&times;</button>
+        
+        <div class="quickview-body">
+            <div class="quickview-media">
+                <img id="quickview-img" src="" alt="" loading="lazy">
+            </div>
+            <div class="quickview-info">
+                <span id="quickview-category" class="quickview-category"></span>
+                <h3 id="quickview-title"></h3>
+                <div id="quickview-stars" class="stars"></div>
+                <p id="quickview-price" class="price"></p>
+                <p id="quickview-desc" class="quickview-desc"></p>
+                
+                <div id="quickview-details-list"></div>
+                
+                <div class="quickview-actions">
+                    <div class="card-qty-stepper" id="quickview-stepper">
+                        <button type="button" class="card-qty-btn" id="qv-dec">−</button>
+                        <span class="card-qty-value" id="qv-qty">1</span>
+                        <button type="button" class="card-qty-btn" id="qv-inc">+</button>
+                    </div>
+                    <button type="button" class="delivery-save-btn" id="qv-add-cart">Add to Cart</button>
+                    <button type="button" class="wishlist-toggle" id="qv-wishlist" aria-label="Add to wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                
+                <p id="quickview-stock" class="stock-badge"></p>
+                
+                <div class="quickview-reviews" id="quickview-reviews">
+                    <h4>Customer Reviews</h4>
+                    <div id="quickview-review-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>

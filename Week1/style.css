@@ -2241,3 +2241,171 @@ footer a:hover {
 [data-theme="dark"] footer {
     background: #0a0e18;
 }
+/* =========================================================
+   Quick View Modal
+   ========================================================= */
+
+.quickview-modal {
+    max-width: 800px;
+    width: 92%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.quickview-body {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    min-height: 420px;
+}
+
+.quickview-media {
+    background: var(--color-surface-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.quickview-media img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.quickview-info {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+.quickview-category {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-primary);
+    background: var(--color-surface-muted);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.quickview-info h3 {
+    font-size: 1.4rem;
+    margin: 0 0 8px;
+    line-height: 1.25;
+}
+
+.quickview-info .price {
+    font-size: 1.35rem;
+    margin: 10px 0;
+}
+
+.quickview-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0 0 14px;
+}
+
+#quickview-details-list {
+    margin-bottom: 14px;
+}
+
+#quickview-details-list ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+#quickview-details-list li {
+    margin-bottom: 4px;
+}
+
+.quickview-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 12px;
+    flex-wrap: wrap;
+}
+
+.quickview-actions .delivery-save-btn {
+    margin-top: 0;
+    flex: 1;
+    min-width: 140px;
+}
+
+.quickview-actions .wishlist-toggle {
+    position: static;
+    width: 40px;
+    height: 40px;
+    box-shadow: none;
+    border: 1px solid var(--color-border);
+}
+
+.quickview-reviews {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--color-border-light);
+}
+
+.quickview-reviews h4 {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+#quickview-review-list {
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+#quickview-review-list .delivery-hint {
+    font-size: 0.82rem;
+}
+
+@media (max-width: 700px) {
+    .quickview-body {
+        grid-template-columns: 1fr;
+    }
+    .quickview-media {
+        max-height: 240px;
+        padding: 16px;
+    }
+    .quickview-media img {
+        max-height: 200px;
+    }
+    .quickview-info {
+        padding: 20px;
+        max-height: 55vh;
+    }
+}
+
+[data-theme="dark"] .quickview-media {
+    background: #1b2130;
+}
+
+[data-theme="dark"] .quickview-category {
+    background: #242b3c;
+    color: var(--color-accent-light);
+}
+
+[data-theme="dark"] .quickview-actions .wishlist-toggle {
+    background: rgba(27, 33, 48, 0.9);
+    border-color: #2a3142;
+}
+
+[data-theme="dark"] .quickview-reviews {
+    border-top-color: #2a3142;
+}
+
+/* Make product images clickable */
+.product-card img {
+    cursor: zoom-in;
+}
