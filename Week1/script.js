@@ -546,6 +546,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const shopNowBtn = document.querySelector('.shop-now-btn');
   if (shopNowBtn) shopNowBtn.addEventListener('click', () => scrollToTarget('new-arrivals'));
 
+  
+  document.querySelectorAll('.hero-secondary-btn[data-target]').forEach(btn => {
+    btn.addEventListener('click', () => scrollToTarget(btn.dataset.target));
+  });
+
   const backToTopBtn = document.getElementById('back-to-top');
   if (backToTopBtn) backToTopBtn.addEventListener('click', () => scrollToTarget('top'));
 
