@@ -1326,4 +1326,131 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && quickviewOverlay?.classList.contains('open')) closeQuickView();
   });
 
+  /* Product comparison — select up to three cards, then review their key details side by side. */
+  const COMPARE_KEY = 'marikato-compare';
+  const compareTray = document.getElementById('compare-tray');
+  const compareTrayLabel = document.getElementById('compare-tray-label');
+  const compareOpenBtn = document.getElementById('compare-open-btn');
+  const compareClearBtn = document.getElementById('compare-clear-btn');
+  const compareOverlay = document.getElementById('compare-overlay');
+  const compareClose = document.getElementById('compare-close');
+  const compareContent = document.getElementById('compare-content');
+
+  function getComparison() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(COMPARE_KEY));
+      return Array.isArray(saved) ? saved.filter(name => cardForComparison(name)).slice(0, 3) : [];
+    } catch (err) { return []; }
+  }
+
+  function saveComparison(names) {
+    try { localStorage.setItem(COMPARE_KEY, JSON.stringify(names)); } catch (err) {}
+  }
+
+  function cardForComparison(name) {
+    return allCards.find(card => card.querySelector('h2')?.textContent.trim() === name) || null;
+  }
+
+  function comparisonSpecs(card) {
+    return Array.from(card?.querySelectorAll('details li') || []).slice(0, 4).map(item => item.textContent.trim());
+  }
+
+  function updateCompareUI() {
+    const names = getComparison();
+    if (compareTray) compareTray.hidden = names.length === 0;
+    if (compareTrayLabel) compareTrayLabel.textContent = `${names.length} product${names.length === 1 ? '' : 's'} selected`;
+    if (compareOpenBtn) compareOpenBtn.disabled = names.length < 2;
+    allCards.forEach(card => {
+      const name = card.querySelector('h2')?.textContent.trim() || '';
+      const button = card.querySelector('.compare-toggle');
+      if (!button) return;
+      const selected = names.includes(name);
+      button.classList.toggle('active', selected);
+      button.setAttribute('aria-pressed', String(selected));
+      button.textContent = selected ? '✓ Added to compare' : 'Compare product';
+    });
+  }
+
+  function toggleComparison(name) {
+    const names = getComparison();
+    const index = names.indexOf(name);
+    if (index !== -1) names.splice(index, 1);
+    else if (names.length >= 3) { showToast('You can compare up to 3 products at a time.'); return; }
+    else names.push(name);
+    saveComparison(names); updateCompareUI();
+  }
+
+  function renderComparison() {
+    if (!compareContent) return;
+    const cards = getComparison().map(cardForComparison).filter(Boolean);
+    compareContent.innerHTML = '';
+    if (cards.length < 2) {
+      const empty = document.createElement('p');
+      empty.className = 'compare-empty'; empty.textContent = 'Select at least two products to compare.';
+      compareContent.appendChild(empty); return;
+    }
+    const table = document.createElement('table'); table.className = 'compare-table';
+    const head = document.createElement('thead'); const headerRow = document.createElement('tr');
+    const labelHead = document.createElement('th'); labelHead.scope = 'col'; labelHead.textContent = 'Product'; headerRow.appendChild(labelHead);
+    cards.forEach(card => {
+      const name = card.querySelector('h2')?.textContent.trim() || 'Product';
+      const cell = document.createElement('th'); cell.scope = 'col';
+      const product = document.createElement('div'); product.className = 'compare-product';
+      const image = card.querySelector('img'); const img = document.createElement('img'); img.src = image?.src || ''; img.alt = image?.alt || name;
+      const title = document.createElement('span'); title.className = 'compare-product-name'; title.textContent = name;
+      const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'compare-remove-btn'; remove.textContent = 'Remove';
+      remove.addEventListener('click', () => { toggleComparison(name); renderComparison(); if (getComparison().length < 2) closeComparison(); });
+      product.append(img, title, remove); cell.appendChild(product); headerRow.appendChild(cell);
+    });
+    head.appendChild(headerRow); table.appendChild(head);
+    const body = document.createElement('tbody');
+    const rows = [
+      { label: 'Price', value: card => card.querySelector('.price')?.textContent.trim() || '—', className: 'compare-price' },
+      { label: 'Rating', value: card => card.querySelector('.stars')?.textContent.trim() || '—' },
+      { label: 'Category', value: card => card.dataset.category === 'local' ? 'Ethiopian Local' : (card.dataset.category || 'Product').replace(/^./, char => char.toUpperCase()) },
+      { label: 'Key details', value: comparisonSpecs, list: true }
+    ];
+    rows.forEach(row => {
+      const tr = document.createElement('tr'); const label = document.createElement('th'); label.scope = 'row'; label.textContent = row.label; tr.appendChild(label);
+      cards.forEach(card => {
+        const cell = document.createElement('td'); const value = row.value(card);
+        if (row.list) {
+          const list = document.createElement('ul'); list.className = 'compare-spec-list';
+          (value.length ? value : ['No additional details']).forEach(detail => { const item = document.createElement('li'); item.textContent = detail; list.appendChild(item); });
+          cell.appendChild(list);
+        } else { cell.textContent = value; if (row.className) cell.className = row.className; }
+        tr.appendChild(cell);
+      });
+      body.appendChild(tr);
+    });
+    table.appendChild(body); compareContent.appendChild(table);
+  }
+
+  function openComparison() {
+    if (getComparison().length < 2) return;
+    renderComparison();
+    if (compareOverlay) compareOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeComparison() {
+    if (compareOverlay) compareOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  allCards.forEach(card => {
+    const name = card.querySelector('h2')?.textContent.trim();
+    const buttonRow = card.querySelector('.btn-row');
+    if (!name || !buttonRow) return;
+    const button = document.createElement('button'); button.type = 'button'; button.className = 'compare-toggle';
+    button.addEventListener('click', () => toggleComparison(name));
+    buttonRow.after(button);
+  });
+  updateCompareUI();
+  if (compareOpenBtn) compareOpenBtn.addEventListener('click', openComparison);
+  if (compareClearBtn) compareClearBtn.addEventListener('click', () => { saveComparison([]); updateCompareUI(); closeComparison(); });
+  if (compareClose) compareClose.addEventListener('click', closeComparison);
+  if (compareOverlay) compareOverlay.addEventListener('click', e => { if (e.target === compareOverlay) closeComparison(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && compareOverlay?.classList.contains('open')) closeComparison(); });
+
 });
