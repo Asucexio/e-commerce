@@ -281,6 +281,17 @@
     No products match your search.
 </p>
 
+<aside id="compare-tray" class="compare-tray" aria-live="polite" aria-label="Product comparison" hidden>
+    <div class="compare-tray-copy">
+        <span class="compare-tray-eyebrow">Product comparison</span>
+        <strong id="compare-tray-label">Select up to 3 products</strong>
+    </div>
+    <div class="compare-tray-actions">
+        <button type="button" id="compare-clear-btn" class="compare-clear-btn">Clear</button>
+        <button type="button" id="compare-open-btn" class="compare-open-btn" disabled>Compare</button>
+    </div>
+</aside>
+
 <section id="local-products">
     <h2>
         Ethiopian Local Products
@@ -1117,6 +1128,19 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Product comparison modal -->
+<div class="modal-overlay" id="compare-overlay">
+    <div class="modal compare-modal" role="dialog" aria-modal="true" aria-labelledby="compare-title">
+        <button type="button" class="modal-close" id="compare-close" aria-label="Close product comparison">&times;</button>
+        <div class="compare-modal-heading">
+            <span class="quickview-category">Side-by-side</span>
+            <h3 id="compare-title">Compare products</h3>
+            <p>Review prices, ratings, and product details before choosing.</p>
+        </div>
+        <div id="compare-content" class="compare-content"></div>
     </div>
 </div>
 <script src="script.js"></script>
