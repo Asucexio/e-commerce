@@ -1035,8 +1035,32 @@ section h2::after {
     flex-wrap: wrap;
     gap: 8px;
     justify-content: center;
-    margin: 20px auto;
+    margin: 20px auto 8px;
     max-width: 900px;
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.clear-filters-btn {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-muted);
+    color: var(--color-text);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+
+.clear-filters-btn:hover {
+    background: #fff;
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
 }
 
 .cat-pill {
