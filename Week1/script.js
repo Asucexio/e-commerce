@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  const allCards = Array.from(document.querySelectorAll('.product-card'));
   const heroSlides = Array.from(document.querySelectorAll('.hero-slide'));
   const heroDots = Array.from(document.querySelectorAll('.hero-dots .dot'));
   const heroSection = document.getElementById('hero');
@@ -563,6 +564,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchForm = document.getElementById('search-form');
   const searchInput = document.getElementById('search-input');
   const noResultsMsg = document.getElementById('no-results-msg');
+  const clearFiltersBtn = document.getElementById('clear-filters-btn');
+
+  function resetAllFilters() {
+    wishlistFilterActive = false;
+    activeCategory = 'all';
+    if (searchInput) searchInput.value = '';
+    if (categoryBar) {
+      categoryBar.querySelectorAll('.cat-pill').forEach(button => {
+        button.classList.toggle('active', button.dataset.cat === 'all');
+      });
+    }
+    if (wishlistBtn) wishlistBtn.classList.remove('active');
+    filterByCategory('all');
+    if (noResultsMsg) {
+      noResultsMsg.textContent = noResultsDefaultText || 'No products match your search.';
+      noResultsMsg.style.display = 'none';
+    }
+    if (wishlistBtn) wishlistBtn.setAttribute('aria-expanded', 'false');
+    closeWishlistPanel();
+  }
 
   function hashString(str) {
     let hash = 0;
@@ -637,6 +658,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (categoryBar) {
     categoryBar.querySelectorAll('.cat-pill').forEach(btn => {
       btn.addEventListener('click', () => filterByCategory(btn.dataset.cat));
+    });
+  }
+
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', () => {
+      resetAllFilters();
+      showToast('Filters cleared');
     });
   }
 
